@@ -109,7 +109,7 @@ export default function Home() {
             ))}
           </div>
 
-          <Link
+          {/* <Link
             href="/donate"
             className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 px-8 py-4 text-base font-medium text-white shadow-lg shadow-purple-500/30 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/40"
           >
@@ -118,7 +118,7 @@ export default function Home() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
             <div className="absolute inset-0 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 transition-opacity group-hover:opacity-100" />
-          </Link>
+          </Link> */}
         </div>
       </section>
 
