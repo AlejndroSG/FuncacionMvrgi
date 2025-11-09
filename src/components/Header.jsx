@@ -59,12 +59,12 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* <Link
+          <Link
             href="/donate"
             className="rounded-full bg-linear-to-r from-blue-600 to-purple-600 px-6 py-2 text-sm font-medium text-white shadow-md shadow-purple-500/20 transition-all hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30"
           >
             Donar
-          </Link> */}
+          </Link>
         </div>
       </nav>
     </motion.header>
