@@ -1,4 +1,5 @@
 import DonationForm from '@/components/DonationForm';
+import { Suspense } from 'react';
 import Header from '@/components/Header';
 import ImpressiveBackground from '@/components/ImpressiveBackground';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -43,7 +44,9 @@ export default function DonatePage() {
           <ScrollReveal>
             <div className="rounded-3xl bg-white/80 p-2 shadow-xl ring-1 ring-black/5 backdrop-blur-xl">
               <div className="rounded-2xl bg-white/90 p-6 shadow-sm ring-1 ring-black/5">
-                <DonationForm />
+                <Suspense fallback={<div className="h-28 animate-pulse rounded-xl bg-gray-100" /> }>
+                  <DonationForm />
+                </Suspense>
               </div>
             </div>
           </ScrollReveal>
