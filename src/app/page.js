@@ -11,62 +11,27 @@ import ImpressiveBackground from "@/components/ImpressiveBackground";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
-  const heroTextRef = useRef(null);
   const statsRef = useRef(null);
   const [quickAmount, setQuickAmount] = useState(20);
-  const orbsRef = useRef(null);
 
   useEffect(() => {
-    // Hero text animation
-    const chars = heroTextRef.current.querySelectorAll(".char");
-    gsap.fromTo(
-      chars,
-      { opacity: 0, y: 100, rotationX: -90 },
-      {
-        opacity: 1,
-        y: 0,
-        rotationX: 0,
-        duration: 1.2,
-        stagger: 0.02,
-        ease: "power4.out",
-      }
-    );
-
-    // Stats counter animation
-    const counters = statsRef.current.querySelectorAll(".counter");
-    counters.forEach((counter) => {
-      const target = parseInt(counter.getAttribute("data-target"));
-      gsap.to(counter, {
-        innerText: target,
-        duration: 2,
-        ease: "power2.out",
-        snap: { innerText: 1 },
-        scrollTrigger: {
-          trigger: counter,
-          start: "top 80%",
-        },
+    if (statsRef.current) {
+      const counters = statsRef.current.querySelectorAll(".counter");
+      counters.forEach((counter) => {
+        const target = parseInt(counter.getAttribute("data-target"));
+        gsap.to(counter, {
+          innerText: target,
+          duration: 2,
+          snap: { innerText: 1 },
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: counter,
+            start: "top 80%",
+          },
+        });
       });
-    });
-
-    const orbs = orbsRef.current?.querySelectorAll('.orb');
-    orbs?.forEach((el, i) => {
-      gsap.to(el, {
-        y: i % 2 === 0 ? 24 : -24,
-        duration: 7 + i,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-      });
-    });
+    }
   }, []);
-
-  const splitText = (text) => {
-    return text.split("").map((char, i) => (
-      <span key={i} className="char inline-block">
-        {char === " " ? "\u00A0" : char}
-      </span>
-    ));
-  };
 
   return (
     <div className="relative text-gray-900">
@@ -74,177 +39,245 @@ export default function Home() {
       <ImpressiveBackground />
 
       {/* Hero */}
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-32 pb-20">
-        <div className="absolute inset-0 -z-10 bg-linear-to-br from-blue-50 via-purple-50 to-pink-50" />
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,var(--tw-gradient-stops))] from-blue-100/50 via-transparent to-transparent" />
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_bottom_left,var(--tw-gradient-stops))] from-purple-100/50 via-transparent to-transparent" />
-        <div ref={orbsRef} className="absolute inset-0 -z-10">
-          <div className="orb absolute left-[8%] top-[15%] h-56 w-56 rounded-full bg-linear-to-br from-blue-400/35 via-purple-400/35 to-pink-400/35 blur-3xl" />
-          <div className="orb absolute right-[12%] top-[20%] h-72 w-72 rounded-full bg-linear-to-br from-purple-400/30 via-pink-400/30 to-blue-400/30 blur-3xl" />
-          <div className="orb absolute left-1/2 bottom-[12%] h-64 w-64 -translate-x-1/2 rounded-full bg-linear-to-br from-emerald-400/25 via-teal-400/25 to-cyan-400/25 blur-3xl" />
-        </div>
+      <section className="relative grid min-h-screen items-center gap-12 overflow-hidden md:px-25 px-6 pt-32 pb-20 lg:grid-cols-2">
+        {/* Simple gradient background */}
+        <div className="absolute inset-0 -z-10 bg-linear-to-br from-orange-50 via-white to-blue-50" />
         
-        <div className="mx-auto max-w-6xl text-center">
-          <div className="mb-8 inline-block">
-            <span className="rounded-full border border-blue-200 bg-blue-50/80 px-4 py-2 text-xs font-medium uppercase tracking-wider text-blue-600 backdrop-blur-sm">
-              Fundación sin ánimo de lucro
+        {/* Content */}
+        <div className="relative z-10 mx-auto max-w-2xl lg:mx-0">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-orange-100 px-4 py-2 text-sm font-semibold text-orange-700">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-orange-500"></span>
             </span>
+            1.247 personas ayudadas este año
           </div>
 
-          <h1 ref={heroTextRef} className="mb-8 text-6xl font-bold leading-tight tracking-tight text-gray-900 sm:text-7xl md:text-8xl lg:text-9xl">
-            {splitText("Ayudar")}
-            <br />
-            {splitText("es simple")}
+          <h1 className="mb-6 text-5xl font-bold leading-[1.1] tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">
+            Tu ayuda llega<br/>
+            <span className="text-orange-600">donde hace falta</span>
           </h1>
 
-          <p className="mx-auto mb-8 max-w-xl text-lg text-gray-700 sm:text-xl">
-            No necesitas gran cosa. Solo ganas de hacer algo que importe.
+          <p className="mb-8 text-lg text-gray-600 lg:text-xl">
+            Sin burocracia, sin comisiones ocultas, sin rollos. Solo personas ayudando a personas.
           </p>
 
-          <div className="mx-auto mb-10 flex max-w-2xl flex-wrap items-center justify-center gap-3">
-            {["Pago 100% seguro con Stripe","Sin comisiones ocultas","Recibo de donación"].map((t) => (
-              <span key={t} className="rounded-full bg-white/70 px-4 py-2 text-xs font-medium text-gray-700 ring-1 ring-black/5 backdrop-blur-xl">
-                {t}
-              </span>
-            ))}
+          <div className="mb-8 flex flex-wrap gap-4">
+            <div className="flex items-center gap-2 text-sm text-gray-700">
+              <svg className="h-5 w-5 text-orange-600" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
+              <span className="font-medium">94% llega directo</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-gray-700">
+              <svg className="h-5 w-5 text-orange-600" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
+              <span className="font-medium">Recibo fiscal automático</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-gray-700">
+              <svg className="h-5 w-5 text-orange-600" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
+              <span className="font-medium">Cancela cuando quieras</span>
+            </div>
           </div>
 
-          <Link
-            href="/donate"
-            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 px-8 py-4 text-base font-medium text-white shadow-lg shadow-purple-500/30 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/40"
-          >
-            <span className="relative z-10">Empezar ahora</span>
-            <svg className="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-            <div className="absolute inset-0 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 transition-opacity group-hover:opacity-100" />
-          </Link>
+          <div className="flex flex-wrap gap-4">
+            <Link
+              href="/donate"
+              className="inline-flex items-center gap-2 rounded-full bg-orange-600 px-8 py-4 text-base font-bold text-white shadow-lg shadow-orange-500/25 transition-all hover:bg-orange-700 hover:shadow-xl hover:shadow-orange-500/40"
+            >
+              Donar ahora
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            </Link>
+            <Link
+              href="#impacto"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-gray-300 bg-white px-8 py-4 text-base font-bold text-gray-900 transition-all hover:border-gray-400"
+            >
+              Ver impacto
+            </Link>
+          </div>
+        </div>
+        
+        {/* Image side */}
+        <div className="relative hidden lg:block">
+          <div className="relative">
+            {/* Main image */}
+            <div className="relative overflow-hidden rounded-3xl shadow-2xl">
+              <img 
+                src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80" 
+                alt="Personas ayudando en comunidad" 
+                className="h-[600px] w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent" />
+            </div>
+            
+            {/* Floating card */}
+            <div className="absolute -bottom-8 -left-8 rounded-2xl bg-white p-6 shadow-2xl">
+              <div className="mb-2 text-3xl font-bold text-orange-600">38</div>
+              <p className="text-sm font-semibold text-gray-900">Proyectos activos</p>
+              <p className="text-xs text-gray-500">en toda España</p>
+            </div>
+            
+            {/* Small badge */}
+            <div className="absolute -top-4 -right-4 rounded-full bg-blue-600 p-4 shadow-lg">
+              <svg className="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Stats */}
       <section ref={statsRef} className="relative px-6 py-24">
-        <div className="mx-auto max-w-6xl rounded-3xl bg-white/70 p-10 shadow-xl ring-1 ring-black/5 backdrop-blur-xl">
-          <div className="grid gap-12 sm:grid-cols-3">
-          <div className="text-center">
-            <div className="mb-2 bg-linear-to-br from-blue-600 to-purple-600 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-6xl">
-              <span className="counter" data-target="1247">0</span>+
-            </div>
-            <p className="text-sm font-medium text-gray-600">Personas ayudadas</p>
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 text-center">
+            <h2 className="text-3xl font-bold text-gray-900">El impacto hasta hoy</h2>
+            <p className="mt-2 text-gray-600">Datos reales, actualizados cada mes</p>
           </div>
-          <div className="text-center">
-            <div className="mb-2 bg-linear-to-br from-purple-600 to-pink-600 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-6xl">
-              <span className="counter" data-target="38">0</span>
+          <div className="grid gap-6 sm:grid-cols-3">
+            <div className="rounded-2xl border border-orange-100 bg-white p-8">
+              <div className="mb-3 text-5xl font-bold text-orange-600">
+                <span className="counter" data-target="1247">0</span>+
+              </div>
+              <p className="mb-1 font-semibold text-gray-900">Personas ayudadas</p>
+              <p className="text-sm text-gray-600">Solo en 2024. Más de 4.500 desde 2020</p>
             </div>
-            <p className="text-sm font-medium text-gray-600">Proyectos activos</p>
-          </div>
-          <div className="text-center">
-            <div className="mb-2 bg-linear-to-br from-pink-600 to-blue-600 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-6xl">
-              <span className="counter" data-target="94">0</span>%
+            <div className="rounded-2xl border border-blue-100 bg-white p-8">
+              <div className="mb-3 text-5xl font-bold text-blue-600">
+                <span className="counter" data-target="38">0</span>
+              </div>
+              <p className="mb-1 font-semibold text-gray-900">Proyectos activos</p>
+              <p className="text-sm text-gray-600">En Madrid, Barcelona y Valencia</p>
             </div>
-            <p className="text-sm font-medium text-gray-600">Va directo a quien lo necesita</p>
-          </div>
+            <div className="rounded-2xl border border-orange-100 bg-white p-8">
+              <div className="mb-3 text-5xl font-bold text-orange-600">
+                <span className="counter" data-target="94">0</span>%
+              </div>
+              <p className="mb-1 font-semibold text-gray-900">Va directo</p>
+              <p className="text-sm text-gray-600">Solo 6% en gestión. El resto, a los beneficiarios</p>
+            </div>
           </div>
         </div>
       </section>
 
       <section id="como-funciona" className="relative scroll-mt-32 px-6 py-24">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-12">
+            <h2 className="mb-3 text-3xl font-bold text-gray-900 sm:text-4xl">Cómo funciona</h2>
+            <p className="text-lg text-gray-600">Tres pasos. Cinco minutos. Impacto real.</p>
+          </div>
+          <div className="grid gap-8 md:grid-cols-3">
+            <div>
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-600 text-lg font-bold text-white">1</div>
+              <h3 className="mb-2 text-xl font-bold text-gray-900">Elige cantidad</h3>
+              <p className="text-gray-600">Desde 5€. Una vez o mensual. Lo que quieras.</p>
+            </div>
+            <div>
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-lg font-bold text-white">2</div>
+              <h3 className="mb-2 text-xl font-bold text-gray-900">Paga con Stripe</h3>
+              <p className="text-gray-600">Tarjeta, Google Pay, Apple Pay. Lo que uses normalmente.</p>
+            </div>
+            <div>
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-600 text-lg font-bold text-white">3</div>
+              <h3 className="mb-2 text-xl font-bold text-gray-900">Recibe actualizaciones</h3>
+              <p className="text-gray-600">Te contamos quién recibió tu ayuda y cómo le fue.</p>
+            </div>
+          </div>
+          
+          {/* Visual impact section */}
           <ScrollReveal>
-            <div className="mb-12 text-center">
-              <h2 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl">¿Cómo funciona?</h2>
-              <p className="text-lg text-gray-600">Tres pasos sencillos para crear impacto real.</p>
+            <div className="mt-20 grid gap-6 sm:grid-cols-2">
+              <div className="relative aspect-video overflow-hidden rounded-3xl shadow-xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80" 
+                  alt="Voluntarios ayudando" 
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <p className="text-sm font-semibold text-white">Cada donación marca la diferencia</p>
+                </div>
+              </div>
+              <div className="relative aspect-video overflow-hidden rounded-3xl shadow-xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&q=80" 
+                  alt="Comunidad feliz" 
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <p className="text-sm font-semibold text-white">Juntos creamos cambio real</p>
+                </div>
+              </div>
             </div>
           </ScrollReveal>
-          <div className="grid gap-6 sm:grid-cols-3">
-            <ScrollReveal>
-              <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-gray-100 transition-all hover:shadow-xl">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-blue-600 to-purple-600 text-base font-semibold text-white">1</div>
-                <h3 className="mb-2 text-xl font-semibold">Elige tu aporte</h3>
-                <p className="text-gray-600">Selecciona cantidad y si quieres donar una vez o de forma recurrente.</p>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal>
-              <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-gray-100 transition-all hover:shadow-xl">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-purple-600 to-pink-600 text-base font-semibold text-white">2</div>
-                <h3 className="mb-2 text-xl font-semibold">Pago seguro</h3>
-                <p className="text-gray-600">Procesamos el pago con Stripe para garantizar seguridad y transparencia.</p>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal>
-              <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-gray-100 transition-all hover:shadow-xl">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-pink-600 to-blue-600 text-base font-semibold text-white">3</div>
-                <h3 className="mb-2 text-xl font-semibold">Recibe el impacto</h3>
-                <p className="text-gray-600">Te mantenemos al día con historias y resultados de los proyectos.</p>
-              </div>
-            </ScrollReveal>
-          </div>
         </div>
       </section>
 
       <section id="donar-rapido" className="relative scroll-mt-32 px-6 py-16">
-        <div className="mx-auto max-w-4xl">
-          <ScrollReveal>
-            <div className="rounded-3xl bg-white/70 p-6 shadow-xl ring-1 ring-black/5 backdrop-blur-xl sm:p-10">
-              <div className="mb-6 text-center">
-                <h3 className="text-2xl font-semibold tracking-tight">Donación rápida</h3>
-                <p className="mt-2 text-gray-600">Elige una cantidad o escribe la tuya. Puedes ajustarlo después.</p>
-              </div>
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                {[5,10,20,50].map(v => (
-                  <button
-                    key={v}
-                    type="button"
-                    onClick={() => setQuickAmount(v)}
-                    className={`${quickAmount===v?"bg-gray-900 text-white ring-gray-900":"bg-white/90 text-gray-900 ring-gray-200 hover:bg-white"} rounded-full px-5 py-2 text-sm font-medium ring-1 transition-all`}
-                  >
-                    {v}€
-                  </button>
-                ))}
-              </div>
-              <div className="mt-6 text-center">
-                <Link href={`/donate?amount=${quickAmount}`} className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 px-8 py-3 text-base font-semibold text-white shadow-lg shadow-purple-500/30 transition-all hover:scale-[1.02] hover:shadow-2xl">
-                  <span className="relative z-10">Continuar con {quickAmount}€</span>
-                  <svg className="relative z-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/></svg>
-                  <div className="absolute inset-0 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 transition-opacity group-hover:opacity-100" />
-                </Link>
-              </div>
+        <div className="mx-auto max-w-3xl">
+          <div className="rounded-2xl border border-orange-200 bg-linear-to-br from-orange-50 to-white p-8 sm:p-12">
+            <div className="mb-8">
+              <h3 className="mb-2 text-2xl font-bold text-gray-900">Dona en 30 segundos</h3>
+              <p className="text-gray-600">Elige cantidad, paga, listo. Te mandamos el recibo por email.</p>
             </div>
-          </ScrollReveal>
+            <div className="mb-6 flex flex-wrap gap-3">
+              {[5,10,20,50].map(v => (
+                <button
+                  key={v}
+                  type="button"
+                  onClick={() => setQuickAmount(v)}
+                  className={`${quickAmount===v?"bg-orange-600 text-white border-orange-600":"bg-white text-gray-900 border-gray-300 hover:border-orange-600"} rounded-lg border-2 px-6 py-3 font-bold transition-all`}
+                >
+                  {v}€
+                </button>
+              ))}
+            </div>
+            <Link 
+              href={`/donate?amount=${quickAmount}`} 
+              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-6 py-4 font-bold text-white transition-all hover:bg-orange-700 sm:w-auto"
+            >
+              Donar {quickAmount}€
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            </Link>
+            <p className="mt-4 text-sm text-gray-600">Pago con Stripe. Recibo fiscal al instante.</p>
+          </div>
         </div>
       </section>
 
       {/* Impacto */}
-      <section id="impacto" className="relative scroll-mt-32 px-6 py-32">
+      <section id="impacto" className="relative scroll-mt-32 px-6 py-24">
         <div className="mx-auto max-w-6xl">
-          <ScrollReveal>
-            <h2 className="mb-20 text-center text-5xl font-bold tracking-tight sm:text-6xl">
-              Lo que hacemos
+          <div className="mb-16">
+            <h2 className="mb-3 text-3xl font-bold text-gray-900 sm:text-4xl">
+              Dónde va tu dinero
             </h2>
-          </ScrollReveal>
+            <p className="text-lg text-gray-600">Tres áreas. Impacto directo. Resultados medibles.</p>
+          </div>
 
-          <div className="space-y-32">
+          <div className="space-y-24">
             <ScrollReveal>
               <div className="grid items-center gap-12 lg:grid-cols-2">
                 <div>
-                  <div className="mb-6 inline-block rounded-2xl bg-linear-to-br from-blue-500 to-cyan-500 p-4 shadow-lg shadow-blue-500/20">
-                    <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-orange-600">
+                    <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                     </svg>
                   </div>
-                  <h3 className="mb-4 text-3xl font-bold">Educación</h3>
-                  <p className="mb-6 text-lg text-gray-600">
-                    Material escolar, becas, talleres. Lo que haga falta para que nadie se quede fuera.
+                  <h3 className="mb-2 text-2xl font-bold text-gray-900">Educación</h3>
+                  <p className="mb-4 text-sm font-semibold text-orange-600">482 niños ayudados en 2024</p>
+                  <p className="mb-6 text-gray-600">
+                    Libros, material, matrículas. Lo que haga falta para que puedan estudiar sin preocupaciones.
                   </p>
-                  <Link href="#" className="group inline-flex items-center gap-2 text-base font-medium text-blue-600 transition-colors hover:text-blue-700">
-                    Ver proyectos
-                    <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  <Link href="#" className="inline-flex items-center gap-1 font-semibold text-orange-600 hover:gap-2 transition-all">
+                    Ver casos reales
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                   </Link>
                 </div>
-                <div className="relative aspect-4/3 overflow-hidden rounded-3xl bg-linear-to-br from-blue-400 via-cyan-400 to-blue-500 shadow-xl shadow-blue-500/20">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.3),transparent)]" />
+                <div className="relative aspect-4/3 overflow-hidden rounded-3xl shadow-xl shadow-orange-500/10">
+                  <img 
+                    src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80" 
+                    alt="Niños estudiando en clase" 
+                    className="h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent" />
                 </div>
               </div>
             </ScrollReveal>
@@ -252,24 +285,30 @@ export default function Home() {
             <ScrollReveal>
               <div className="grid items-center gap-12 lg:grid-cols-2">
                 <div className="order-2 lg:order-1">
-                  <div className="relative aspect-4/3 overflow-hidden rounded-3xl bg-linear-to-br from-emerald-400 via-green-400 to-teal-500 shadow-xl shadow-green-500/20">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.3),transparent)]" />
+                  <div className="relative aspect-4/3 overflow-hidden rounded-3xl shadow-xl shadow-blue-500/10">
+                    <img 
+                      src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" 
+                      alt="Familia feliz en su hogar" 
+                      className="h-full w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent" />
                   </div>
                 </div>
                 <div className="order-1 lg:order-2">
-                  <div className="mb-6 inline-block rounded-2xl bg-linear-to-br from-emerald-500 to-teal-500 p-4 shadow-lg shadow-emerald-500/20">
-                    <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600">
+                    <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
                   </div>
-                  <h3 className="mb-4 text-3xl font-bold">Vivienda</h3>
-                  <p className="mb-6 text-lg text-gray-600">
-                    Todos merecen un lugar donde sentirse seguros. Trabajamos para que sea posible.
+                  <h3 className="mb-2 text-2xl font-bold text-gray-900">Vivienda</h3>
+                  <p className="mb-4 text-sm font-semibold text-blue-600">127 familias con techo en 2024</p>
+                  <p className="mb-6 text-gray-600">
+                    Ayudas al alquiler, arreglos urgentes, depósitos. Porque nadie debería dormir en la calle.
                   </p>
-                  <Link href="#" className="group inline-flex items-center gap-2 text-base font-medium text-emerald-600 transition-colors hover:text-emerald-700">
-                    Ver proyectos
-                    <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  <Link href="#" className="inline-flex items-center gap-1 font-semibold text-blue-600 hover:gap-2 transition-all">
+                    Ver casos reales
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                   </Link>
                 </div>
@@ -279,24 +318,30 @@ export default function Home() {
             <ScrollReveal>
               <div className="grid items-center gap-12 lg:grid-cols-2">
                 <div>
-                  <div className="mb-6 inline-block rounded-2xl bg-linear-to-br from-purple-500 to-pink-500 p-4 shadow-lg shadow-purple-500/20">
-                    <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-orange-600">
+                    <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
                   </div>
-                  <h3 className="mb-4 text-3xl font-bold">Salud</h3>
-                  <p className="mb-6 text-lg text-gray-600">
-                    Medicamentos, tratamientos, apoyo psicológico. Cuidar de la gente es lo primero.
+                  <h3 className="mb-2 text-2xl font-bold text-gray-900">Salud</h3>
+                  <p className="mb-4 text-sm font-semibold text-orange-600">638 tratamientos pagados en 2024</p>
+                  <p className="mb-6 text-gray-600">
+                    Medicinas, terapias, dentista. La salud no es un lujo. Nadie tiene que elegir entre comer o curarse.
                   </p>
-                  <Link href="#" className="group inline-flex items-center gap-2 text-base font-medium text-purple-600 transition-colors hover:text-purple-700">
-                    Ver proyectos
-                    <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  <Link href="#" className="inline-flex items-center gap-1 font-semibold text-orange-600 hover:gap-2 transition-all">
+                    Ver casos reales
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                   </Link>
                 </div>
-                <div className="relative aspect-4/3 overflow-hidden rounded-3xl bg-linear-to-br from-purple-400 via-pink-400 to-purple-500 shadow-xl shadow-purple-500/20">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.3),transparent)]" />
+                <div className="relative aspect-4/3 overflow-hidden rounded-3xl shadow-xl shadow-orange-500/10">
+                  <img 
+                    src="https://images.unsplash.com/photo-1584515933487-779824d29309?w=800&q=80" 
+                    alt="Médico atendiendo paciente" 
+                    className="h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent" />
                 </div>
               </div>
             </ScrollReveal>
@@ -304,8 +349,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="partners" className="relative scroll-mt-32 bg-transparent px-6 py-24">
-        <div className="mx-auto max-w-6xl">
+      <section id="partners" className="relative scroll-mt-32 overflow-hidden bg-transparent px-6 py-24">
+        {/* Background elements */}
+        <div className="absolute left-[10%] top-[20%] h-28 w-28 rounded-full bg-blue-200/20 blur-3xl" />
+        <div className="absolute right-[15%] bottom-[20%] h-32 w-32 rounded-full bg-orange-200/20 blur-3xl" />
+        <div className="absolute left-[70%] top-[40%] h-12 w-12 rotate-45 rounded-lg bg-orange-400/10 blur-sm" />
+        
+        <div className="relative z-10 mx-auto max-w-6xl">
           <ScrollReveal>
             <h2 className="mb-12 text-center text-4xl font-bold tracking-tight sm:text-5xl">Con la ayuda de</h2>
           </ScrollReveal>
@@ -335,9 +385,9 @@ export default function Home() {
           </ScrollReveal>
           <div className="grid gap-6 sm:grid-cols-3">
             {[
-              { title: 'Transparencia', desc: 'Cuentas claras y reportes periódicos.', colors: 'from-blue-500/30 via-purple-500/30 to-pink-500/30' },
-              { title: 'Cercanía', desc: 'Ayuda directa, sin intermediarios innecesarios.', colors: 'from-emerald-500/30 via-teal-500/30 to-cyan-500/30' },
-              { title: 'Impacto', desc: 'Medimos resultados y aprendemos en público.', colors: 'from-purple-500/30 via-pink-500/30 to-blue-500/30' },
+              { title: 'Transparencia', desc: 'Cuentas claras y reportes periódicos.', colors: 'from-slate-300 via-slate-200 to-slate-300' },
+              { title: 'Cercanía', desc: 'Ayuda directa, sin intermediarios innecesarios.', colors: 'from-slate-300 via-slate-200 to-slate-300' },
+              { title: 'Impacto', desc: 'Medimos resultados y aprendemos en público.', colors: 'from-slate-300 via-slate-200 to-slate-300' },
             ].map((c, i) => (
               <ScrollReveal key={i}>
                 <div className={`rounded-3xl p-[1.5px] bg-linear-to-r ${c.colors} shadow-[0_8px_30px_rgba(0,0,0,0.06)]`}>
@@ -357,18 +407,18 @@ export default function Home() {
           <ScrollReveal>
             <h2 className="mb-8 text-center text-4xl font-bold tracking-tight sm:text-5xl">Transparencia</h2>
           </ScrollReveal>
-          <div className="rounded-3xl bg-white/70 p-8 shadow-xl ring-1 ring-black/5 backdrop-blur-xl">
+          <div className="rounded-3xl bg-white/80 p-8 shadow-xl ring-1 ring-black/5 backdrop-blur-xl">
             <div className="mb-6">
               <div className="mb-2 flex items-center justify-between text-sm"><span className="font-medium text-gray-900">Programas</span><span className="text-gray-600">86%</span></div>
-              <div className="h-2 w-full rounded-full bg-gray-200"><div className="h-2 rounded-full bg-linear-to-r from-blue-600 to-purple-600" style={{width:'86%'}}/></div>
+              <div className="h-2 w-full rounded-full bg-gray-200"><div className="h-2 rounded-full bg-gray-900" style={{width:'86%'}}/></div>
             </div>
             <div className="mb-6">
               <div className="mb-2 flex items-center justify-between text-sm"><span className="font-medium text-gray-900">Operación</span><span className="text-gray-600">8%</span></div>
-              <div className="h-2 w-full rounded-full bg-gray-200"><div className="h-2 rounded-full bg-linear-to-r from-emerald-600 to-teal-600" style={{width:'8%'}}/></div>
+              <div className="h-2 w-full rounded-full bg-gray-200"><div className="h-2 rounded-full bg-gray-700" style={{width:'8%'}}/></div>
             </div>
             <div>
               <div className="mb-2 flex items-center justify-between text-sm"><span className="font-medium text-gray-900">Reserva</span><span className="text-gray-600">6%</span></div>
-              <div className="h-2 w-full rounded-full bg-gray-200"><div className="h-2 rounded-full bg-linear-to-r from-pink-600 to-blue-600" style={{width:'6%'}}/></div>
+              <div className="h-2 w-full rounded-full bg-gray-200"><div className="h-2 rounded-full bg-gray-500" style={{width:'6%'}}/></div>
             </div>
           </div>
         </div>
@@ -376,55 +426,73 @@ export default function Home() {
 
       <section id="testimonios" className="relative scroll-mt-32 px-6 py-24">
         <div className="mx-auto max-w-6xl">
-          <ScrollReveal>
-            <h2 className="mb-12 text-center text-4xl font-bold tracking-tight sm:text-5xl">Lo que dice la gente</h2>
-          </ScrollReveal>
+          <div className="mb-12">
+            <h2 className="mb-3 text-3xl font-bold text-gray-900 sm:text-4xl">Historias reales</h2>
+            <p className="text-lg text-gray-600">Personas que donaron y personas que recibieron ayuda.</p>
+          </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 quote:
-                  "Pensé que mi donación no haría diferencia. Hoy sé el nombre de la persona a la que ayudó.",
-                name: "Claudia",
-                role: "Donante",
+                  "Mi madre no podía pagar las medicinas. Gracias a vuestra ayuda hoy está bien y yo puedo seguir estudiando. Nunca olvidaré lo que hicisteis por nosotros.",
+                name: "Sofía L.",
+                role: "Beneficiaria directa",
+                color: "orange",
+                avatar: "https://i.pravatar.cc/150?img=47"
               },
               {
                 quote:
-                  "Procesos claros y comunicación constante. Da gusto apoyar algo así.",
-                name: "Marcos",
-                role: "Colaborador",
+                  "Llevamos años donando a otras ONGs pero esta es diferente. Sabes exactamente quién recibió tu ayuda, te envían fotos y actualizaciones. Es increíble.",
+                name: "Miguel Á.",
+                role: "Donante mensual",
+                color: "blue",
+                avatar: "https://i.pravatar.cc/150?img=12"
               },
               {
                 quote:
-                  "Gracias a la fundación tengo material para estudiar y seguir adelante.",
-                name: "Nadia",
-                role: "Beneficiaria",
+                  "Mi hijo tiene dislexia y no podíamos pagar el material adaptado. La fundación nos ayudó en 48 horas. Ahora va al cole feliz.",
+                name: "Carmen R.",
+                role: "Madre de beneficiario",
+                color: "orange",
+                avatar: "https://i.pravatar.cc/150?img=32"
               },
             ].map((t, i) => (
-              <ScrollReveal key={i}>
-                <div className="h-full rounded-3xl bg-white p-8 shadow-sm ring-1 ring-gray-100 transition-all hover:shadow-xl">
-                  <p className="mb-6 text-lg text-gray-700">“{t.quote}”</p>
-                  <div className="text-sm font-semibold text-gray-900">{t.name}</div>
-                  <div className="text-sm text-gray-500">{t.role}</div>
+              <div key={i} className="rounded-2xl border border-gray-200 bg-white p-6">
+                <p className="mb-6 text-gray-700">"{t.quote}"</p>
+                <div className="flex items-center gap-3">
+                  <img src={t.avatar} alt={t.name} className="h-10 w-10 rounded-full object-cover" />
+                  <div>
+                    <div className="font-semibold text-gray-900">{t.name}</div>
+                    <div className="text-sm text-gray-600">{t.role}</div>
+                  </div>
                 </div>
-              </ScrollReveal>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Nosotros */}
-      <section id="nosotros" className="relative scroll-mt-32 overflow-hidden bg-linear-to-br from-gray-900 via-purple-900 to-blue-900 px-6 py-24 text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(139,92,246,0.15),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(59,130,246,0.15),transparent_50%)]" />
+      <section id="nosotros" className="relative scroll-mt-32 overflow-hidden bg-linear-to-br from-slate-950 via-slate-900 to-slate-900 px-6 py-24 text-white">
+        {/* Dot pattern */}
+        <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0)', backgroundSize: '24px 24px'}} />
+        
+        {/* Radial overlays */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(251,146,60,0.08),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(59,130,246,0.08),transparent_50%)]" />
+        
+        {/* Decorative elements */}
+        <div className="absolute left-[10%] top-[20%] h-20 w-20 rounded-full bg-orange-500/5 blur-2xl" />
+        <div className="absolute right-[15%] bottom-[25%] h-24 w-24 rounded-full bg-blue-500/5 blur-2xl" />
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <ScrollReveal>
             <h2 className="mb-8 text-5xl font-bold tracking-tight sm:text-6xl">Sin rollos</h2>
           </ScrollReveal>
           <ScrollReveal>
-            <p className="mb-6 text-xl text-purple-200 sm:text-2xl">Somos gente normal haciendo cosas normales.</p>
+            <p className="mb-6 text-xl text-slate-200 sm:text-2xl">Somos gente normal haciendo cosas normales.</p>
           </ScrollReveal>
           <ScrollReveal>
-            <p className="text-lg text-blue-200">No hay oficinas gigantes ni sueldos millonarios. Solo personas que creen que se puede hacer mejor y que trabajan para que pase. Tu donación va a donde tiene que ir.</p>
+            <p className="text-lg text-slate-300">No hay oficinas gigantes ni sueldos millonarios. Solo personas que creen que se puede hacer mejor y que trabajan para que pase. Tu donación va a donde tiene que ir.</p>
           </ScrollReveal>
         </div>
       </section>
@@ -461,30 +529,30 @@ export default function Home() {
       </section>
 
       {/* CTA Final */}
-      <section className="relative px-6 py-32">
-        <div className="mx-auto max-w-4xl text-center">
-          <ScrollReveal>
-            <h2 className="mb-8 text-5xl font-bold tracking-tight sm:text-6xl">
-              ¿Empezamos?
-            </h2>
-          </ScrollReveal>
-          <ScrollReveal>
-            <p className="mb-12 text-xl text-gray-600">
-              Cualquier cantidad sirve. En serio.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal>
+      <section className="relative px-6 py-24">
+        <div className="mx-auto max-w-4xl rounded-2xl border border-orange-200 bg-linear-to-br from-orange-50 to-white p-12 text-center">
+          <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
+            Lista para ayudar?
+          </h2>
+          <p className="mb-8 text-lg text-gray-600">
+            1.247 personas ya lo han hecho este año. Tu aporte, por pequeño que sea, cuenta.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/donate"
-              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-linear-to-r from-purple-600 via-pink-600 to-blue-600 px-10 py-5 text-lg font-medium text-white shadow-2xl shadow-purple-500/30 transition-all hover:scale-105 hover:shadow-purple-500/50"
+              className="inline-flex items-center gap-2 rounded-lg bg-orange-600 px-8 py-4 font-bold text-white transition-all hover:bg-orange-700"
             >
-              <span className="relative z-10">Hacer una donación</span>
-              <svg className="relative z-10 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-              <div className="absolute inset-0 bg-linear-to-r from-purple-500 via-pink-500 to-blue-500 opacity-0 transition-opacity group-hover:opacity-100" />
+              Donar ahora
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </Link>
-          </ScrollReveal>
+            <Link
+              href="#como-funciona"
+              className="inline-flex items-center gap-2 rounded-lg border-2 border-gray-300 bg-white px-8 py-4 font-bold text-gray-900 transition-all hover:border-gray-400"
+            >
+              Ver cómo funciona
+            </Link>
+          </div>
+          <p className="mt-6 text-sm text-gray-600">Desde 5€. Cancela cuando quieras. Recibo al instante.</p>
         </div>
       </section>
 

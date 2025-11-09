@@ -32,7 +32,7 @@ export default function Header() {
         }`}
       >
         <div
-          className={`pointer-events-none absolute inset-0 rounded-full bg-linear-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 ${
+          className={`pointer-events-none absolute inset-0 rounded-full bg-white/15 ${
             scrolled ? "opacity-100" : "opacity-80"
           }`}
         />
@@ -61,7 +61,7 @@ export default function Header() {
 
           <Link
             href="/donate"
-            className="rounded-full bg-linear-to-r from-blue-600 to-purple-600 px-6 py-2 text-sm font-medium text-white shadow-md shadow-purple-500/20 transition-all hover:scale-105 hover:shadow-lg hover:shadow-purple-500/30"
+            className="rounded-full bg-orange-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-orange-500/20 transition-all hover:scale-105 hover:bg-orange-700 hover:shadow-lg hover:shadow-orange-500/30"
           >
             Donar
           </Link>

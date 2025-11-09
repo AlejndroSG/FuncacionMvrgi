@@ -17,27 +17,44 @@ export default function DonatePage() {
 
       {/* Hero */}
       <section className="relative px-6 pt-32 pb-12 text-center">
+        {/* Background image */}
+        <div className="absolute inset-0 -z-10">
+          <img 
+            src="https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=1600&q=80" 
+            alt="Personas ayudando" 
+            className="h-full w-full object-cover opacity-[0.06]"
+          />
+        </div>
         <div className="mx-auto max-w-3xl">
           <div className="mb-4 inline-block">
-            <span className="rounded-full border border-blue-200 bg-blue-50/80 px-4 py-2 text-xs font-medium uppercase tracking-wider text-blue-600 backdrop-blur-sm">
-              Donación segura con Stripe
+            <span className="rounded-full border border-orange-200 bg-orange-50/80 px-4 py-2 text-xs font-medium uppercase tracking-wider text-orange-700 backdrop-blur-sm">
+              100% Seguro y transparente
             </span>
           </div>
-          <h1 className="mb-4 text-5xl font-bold tracking-tight sm:text-6xl">Tu ayuda cuenta</h1>
-          <p className="text-lg text-gray-600">Cada aporte acelera proyectos reales de educación, vivienda y salud.</p>
+          <h1 className="mb-4 text-5xl font-bold tracking-tight sm:text-6xl">Cambia una vida hoy</h1>
+          <p className="text-lg text-gray-700">Tu donación llega directamente a familias reales. Sin intermediarios, con total transparencia.</p>
         </div>
       </section>
 
       {/* Content */}
-      <section className="relative px-6 pb-24">
+      <section className="relative px-6 pb-24 mt-20">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2">
           <ScrollReveal>
-            <div className="rounded-3xl bg-white/70 p-8 shadow-xl ring-1 ring-black/5 backdrop-blur-xl">
-              <h2 className="mb-4 text-2xl font-semibold">Transparencia y confianza</h2>
-              <ul className="space-y-3 text-gray-600">
-                <li className="flex items-start gap-3"><span>✅</span><span>Pago procesado por Stripe con el máximo nivel de seguridad.</span></li>
-                <li className="flex items-start gap-3"><span>✅</span><span>Recibirás confirmación por email y puedes solicitar recibo.</span></li>
-                <li className="flex items-start gap-3"><span>✅</span><span>Te informamos del impacto de tu donación periódicamente.</span></li>
+            <div className="rounded-3xl bg-white/80 p-8 shadow-xl ring-1 ring-orange-100 backdrop-blur-xl">
+              <h2 className="mb-4 text-2xl font-bold text-gray-900">¿Por qué donar con nosotros?</h2>
+              <ul className="space-y-4 text-gray-700">
+                <li className="flex items-start gap-3">
+                  <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-100 text-orange-600">✓</span>
+                  <span><strong>Pago 100% seguro</strong>: Procesado por Stripe, la plataforma de pagos más fiable del mundo.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-600">✓</span>
+                  <span><strong>Recibo fiscal automático</strong>: Te llega por email al instante para que puedas deducir tu donación.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-orange-100 text-orange-600">✓</span>
+                  <span><strong>Transparencia total</strong>: Recibe actualizaciones reales de cómo tu ayuda cambió vidas.</span>
+                </li>
               </ul>
             </div>
           </ScrollReveal>

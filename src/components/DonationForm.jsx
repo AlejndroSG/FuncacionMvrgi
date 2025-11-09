@@ -69,10 +69,10 @@ export default function DonationForm() {
               key={v}
               type="button"
               onClick={() => { setPreset(v); setAmount(String(v)); }}
-              className={`rounded-full px-4 py-2 text-sm font-medium ring-1 transition-all ${
+              className={`rounded-full px-4 py-2 text-sm font-medium ring-2 transition-all ${
                 preset === v
-                  ? 'bg-gray-900 text-white ring-gray-900'
-                  : 'bg-white/80 text-gray-900 ring-gray-200 hover:bg-white'
+                  ? 'bg-orange-600 text-white ring-orange-600 shadow-lg'
+                  : 'bg-white text-gray-900 ring-orange-200 hover:ring-orange-300'
               }`}
             >
               {v}€
@@ -100,12 +100,12 @@ export default function DonationForm() {
       <button
         disabled={loading}
         type="submit"
-        className="group relative inline-flex w-full items-center justify-center overflow-hidden rounded-full bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 px-5 py-3 text-base font-semibold text-white shadow-lg shadow-purple-500/30 transition-all hover:scale-[1.02] hover:shadow-2xl disabled:opacity-60"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-orange-600 px-5 py-3 text-base font-bold text-white shadow-lg shadow-orange-500/30 transition-all hover:bg-orange-700 hover:shadow-xl hover:shadow-orange-500/40 disabled:opacity-60"
       >
-        <span className="relative z-10">{loading ? 'Procesando...' : 'Donar ahora'}</span>
-        <div className="absolute inset-0 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 transition-opacity group-hover:opacity-100" />
+        {loading ? 'Procesando...' : 'Donar ahora'}
+        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
       </button>
-      <p className="text-xs text-gray-500">{PUBLISHABLE_KEY ? '🔒 Serás redirigido a Stripe Checkout de forma segura.' : '🧪 Modo demo: sin Stripe, te llevamos a la página de éxito.'}</p>
+      <p className="text-xs text-gray-600">{PUBLISHABLE_KEY ? '🔒 Pago procesado por Stripe • Recibo fiscal automático' : '🧪 Modo demo: sin Stripe, te llevamos a la página de éxito.'}</p>
     </form>
   );
 }
