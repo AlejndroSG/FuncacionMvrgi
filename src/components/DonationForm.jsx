@@ -71,8 +71,8 @@ export default function DonationForm() {
               onClick={() => { setPreset(v); setAmount(String(v)); }}
               className={`rounded-full px-4 py-2 text-sm font-medium ring-2 transition-all ${
                 preset === v
-                  ? 'bg-orange-600 text-white ring-orange-600 shadow-lg'
-                  : 'bg-white text-gray-900 ring-orange-200 hover:ring-orange-300'
+                  ? 'bg-[#224621] text-white ring-[#224621] shadow-lg'
+                  : 'bg-white text-gray-900 ring-[#b3cfb1] hover:ring-[#224621]'
               }`}
             >
               {v}€
@@ -100,7 +100,7 @@ export default function DonationForm() {
       <button
         disabled={loading}
         type="submit"
-        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-orange-600 px-5 py-3 text-base font-bold text-white shadow-lg shadow-orange-500/30 transition-all hover:bg-orange-700 hover:shadow-xl hover:shadow-orange-500/40 disabled:opacity-60"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#224621] px-5 py-3 text-base font-bold text-white shadow-lg shadow-[#224621]/30 transition-all hover:bg-[#1b3819] hover:shadow-xl hover:shadow-[#224621]/40 disabled:opacity-60"
       >
         {loading ? 'Procesando...' : 'Donar ahora'}
         <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>

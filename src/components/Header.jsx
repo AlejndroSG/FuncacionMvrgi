@@ -61,7 +61,7 @@ export default function Header() {
 
           <Link
             href="/donate"
-            className="rounded-full bg-orange-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-orange-500/20 transition-all hover:scale-105 hover:bg-orange-700 hover:shadow-lg hover:shadow-orange-500/30"
+            className="rounded-full bg-[#224621] px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#224621]/20 transition-all hover:scale-105 hover:bg-[#1b3819] hover:shadow-lg hover:shadow-[#224621]/30"
           >
             Donar
           </Link>

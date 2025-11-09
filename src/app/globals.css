@@ -41,6 +41,21 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  
+  /* Custom brand colors */
+  --color-brand-primary: #224621;
+  --color-brand-primary-50: #f0f5f0;
+  --color-brand-primary-100: #d9e7d8;
+  --color-brand-primary-200: #b3cfb1;
+  --color-brand-primary-600: #1b3819;
+  --color-brand-primary-700: #152b14;
+  
+  --color-brand-secondary: #215597;
+  --color-brand-secondary-50: #eff5fb;
+  --color-brand-secondary-100: #d4e4f4;
+  --color-brand-secondary-200: #a9c9e9;
+  --color-brand-secondary-600: #1a4479;
+  --color-brand-secondary-700: #14335c;
 }
 
 :root {

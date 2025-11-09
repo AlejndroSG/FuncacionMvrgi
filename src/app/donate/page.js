@@ -27,7 +27,7 @@ export default function DonatePage() {
         </div>
         <div className="mx-auto max-w-3xl">
           <div className="mb-4 inline-block">
-            <span className="rounded-full border border-orange-200 bg-orange-50/80 px-4 py-2 text-xs font-medium uppercase tracking-wider text-orange-700 backdrop-blur-sm">
+            <span className="rounded-full border border-[#b3cfb1] bg-[#f0f5f0]/80 px-4 py-2 text-xs font-medium uppercase tracking-wider text-[#1b3819] backdrop-blur-sm">
               100% Seguro y transparente
             </span>
           </div>
