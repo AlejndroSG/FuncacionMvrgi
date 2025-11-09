@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { useSearchParams } from 'next/navigation';
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
+const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+const stripePromise = PUBLISHABLE_KEY ? loadStripe(PUBLISHABLE_KEY) : Promise.resolve(null);
 
 export default function DonationForm() {
   const [amount, setAmount] = useState('');
@@ -34,6 +35,10 @@ export default function DonationForm() {
     }
     setLoading(true);
     try {
+      if (!PUBLISHABLE_KEY) {
+        window.location.href = `/success?demo=1&amount=${amountNumber}`;
+        return;
+      }
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
@@ -100,7 +105,7 @@ export default function DonationForm() {
         <span className="relative z-10">{loading ? 'Procesando...' : 'Donar ahora'}</span>
         <div className="absolute inset-0 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 transition-opacity group-hover:opacity-100" />
       </button>
-      <p className="text-xs text-gray-500">🔒 Serás redirigido a Stripe Checkout de forma segura.</p>
+      <p className="text-xs text-gray-500">{PUBLISHABLE_KEY ? '🔒 Serás redirigido a Stripe Checkout de forma segura.' : '🧪 Modo demo: sin Stripe, te llevamos a la página de éxito.'}</p>
     </form>
   );
 }
