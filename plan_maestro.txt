@@ -1,0 +1,59 @@
+# Plan Maestro de Desarrollo - Fundación Mvrgi
+
+Este documento detalla los pasos a seguir para implementar las nuevas funcionalidades solicitadas. Iremos completando cada sección bajo supervisión.
+
+## 5.1 Area ecológica El taray - Aula de la naturaleza - El duende de Balerma
+1. [x] Diseñar la interfaz de usuario (UI) para la página de "Area Ecológica" (Hero section, galería, información).
+2. [x] Crear los componentes de React necesarios para mostrar la información del "Aula de la naturaleza" y "El duende de Balerma".
+3. [x] Configurar la navegación/rutas para acceder a esta nueva sección.
+4. [x] Implementar la carga de contenido (textos e imágenes) de forma dinámica o estática según corresponda.
+5. Realizar pruebas de responsividad y verificar la correcta visualización en móviles y escritorio.
+
+## 5.2 Apartado para donación principal de la fundación mvrgi
+1. Diseñar el formulario de donación (selección de cantidad, datos del donante, frecuencia).
+2. Integrar una pasarela de pago (ej. Stripe o PayPal) en el frontend y backend.
+3. Crear la lógica de servidor (API Routes) para procesar la transacción de forma segura.
+4. Implementar confirmación de donación y envío de recibo por correo electrónico.
+5. Probar el flujo completo de donación en entorno de pruebas (Sandbox).
+
+## 5.3 Co-housing (residencia para mayores)
+1. Crear una página informativa ("Landing page") específica para el proyecto Co-housing.
+2. Desarrollar un formulario de contacto/interés para potenciales residentes.
+3. Implementar componente de galería o tour virtual para mostrar las instalaciones proyectadas.
+4. Conectar el formulario con un servicio de backend o email para recibir las solicitudes.
+5. Optimizar el SEO de la página para búsquedas relacionadas con residencia de mayores.
+
+## 5.4 Estatua de la inmaculada concepción
+1. Diseñar una sección dedicada a la historia y detalles de la Estatua.
+2. Implementar un visor de imágenes de alta calidad para la estatua.
+3. Añadir textos explicativos y contexto histórico.
+4. (Opcional) Añadir botón de donación específico para mantenimiento de la estatua.
+5. Revisión final de diseño y maquetación.
+
+## 5.5 Voluntariado internacional (Ecuador instituto cervantes)
+1. Crear la vista de "Voluntariado" con información sobre el programa en Ecuador.
+2. Desarrollar el formulario de inscripción para voluntarios (subida de CV, motivación).
+3. Implementar validaciones en el formulario (lado cliente y servidor).
+4. Configurar el almacenamiento de las solicitudes en base de datos.
+5. Crear panel o sistema de notificación para los administradores sobre nuevos voluntarios.
+
+## 6 Venta de títulos honoríficos
+1. Definir los tipos de títulos y precios (modelo de datos).
+2. Crear el catálogo visual de títulos disponibles para la compra.
+3. Implementar el flujo de compra (Checkout) específico para productos digitales.
+4. Desarrollar la generación automática del título (PDF) con el nombre del comprador.
+5. Configurar el envío automático del título por email tras la compra.
+
+## 7 Venta de souvenir
+1. Configurar la estructura de catálogo de productos (Tienda).
+2. Crear componentes para tarjetas de producto y página de detalle de producto.
+3. Implementar funcionalidad de carrito de compras (estado global).
+4. Desarrollar el proceso de pago y recolección de datos de envío.
+5. Implementar gestión básica de stock o disponibilidad en la interfaz.
+
+## 8 Método de puntuación donaciones souvenir
+1. Diseñar la lógica del sistema de puntos (ej. 1 euro = X puntos).
+2. Modificar el modelo de Usuario para almacenar el saldo de puntos.
+3. Implementar triggers/hooks que asignen puntos tras una donación o compra exitosa.
+4. Crear interfaz en el perfil de usuario para ver el historial y saldo de puntos.
+5. Implementar la lógica para canjear puntos (descuentos o regalos) en el checkout.

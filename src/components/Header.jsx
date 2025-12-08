@@ -42,19 +42,22 @@ export default function Header() {
           </Link>
 
           <div className="hidden items-center gap-8 md:flex">
-            <Link href="#como-funciona" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
+            <Link href="/area-ecologica" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
+              Area Ecológica
+            </Link>
+            <Link href="/#como-funciona" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
               Cómo funciona
             </Link>
-            <Link href="#impacto" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
+            <Link href="/#impacto" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
               Impacto
             </Link>
-            <Link href="#testimonios" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
+            <Link href="/#testimonios" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
               Testimonios
             </Link>
-            <Link href="#faq" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
+            <Link href="/#faq" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
               FAQ
             </Link>
-            <Link href="#nosotros" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
+            <Link href="/#nosotros" className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900">
               Nosotros
             </Link>
           </div>
