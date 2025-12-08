@@ -10,6 +10,11 @@ const stripePromise = PUBLISHABLE_KEY ? loadStripe(PUBLISHABLE_KEY) : Promise.re
 export default function DonationForm() {
   const [amount, setAmount] = useState('');
   const [preset, setPreset] = useState(null);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [country, setCountry] = useState('');
+  const [frequency, setFrequency] = useState('one-time');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const searchParams = useSearchParams();
@@ -29,6 +34,17 @@ export default function DonationForm() {
     e.preventDefault();
     setError('');
     const amountNumber = Math.floor(Number(amount));
+
+    if (!name.trim()) {
+      setError('Introduce tu nombre.');
+      return;
+    }
+
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError('Introduce un email válido.');
+      return;
+    }
+
     if (!amountNumber || amountNumber < 1) {
       setError('Introduce una cantidad válida (mínimo 1).');
       return;
@@ -42,7 +58,15 @@ export default function DonationForm() {
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ amount: amountNumber, currency: 'eur' }),
+        body: JSON.stringify({
+          amount: amountNumber,
+          currency: 'eur',
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim() || undefined,
+          country: country.trim() || undefined,
+          frequency,
+        }),
       });
       if (!res.ok) {
         const text = await res.text();
@@ -93,6 +117,83 @@ export default function DonationForm() {
               placeholder="20"
               inputMode="numeric"
             />
+          </div>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700">
+              Nombre completo <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full rounded-xl border border-gray-200 bg-white/90 px-3 py-2 text-gray-900 shadow-sm outline-none ring-0 transition focus:border-gray-400"
+              placeholder="Tu nombre"
+              autoComplete="name"
+              required
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700">
+              Email <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full rounded-xl border border-gray-200 bg-white/90 px-3 py-2 text-gray-900 shadow-sm outline-none ring-0 transition focus:border-gray-400"
+              placeholder="tu@email.com"
+              autoComplete="email"
+              required
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700">Teléfono (opcional)</label>
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full rounded-xl border border-gray-200 bg-white/90 px-3 py-2 text-gray-900 shadow-sm outline-none ring-0 transition focus:border-gray-400"
+              placeholder="+34 600 000 000"
+              autoComplete="tel"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700">País (opcional)</label>
+            <input
+              type="text"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              className="w-full rounded-xl border border-gray-200 bg-white/90 px-3 py-2 text-gray-900 shadow-sm outline-none ring-0 transition focus:border-gray-400"
+              placeholder="España"
+              autoComplete="country-name"
+            />
+          </div>
+        </div>
+        <div className="space-y-2">
+          <p className="text-sm font-medium text-gray-700">Frecuencia</p>
+          <div className="grid grid-cols-2 gap-2">
+            {[{ value: 'one-time', label: 'Única' }, { value: 'monthly', label: 'Mensual' }].map((option) => (
+              <label
+                key={option.value}
+                className={`flex cursor-pointer items-center justify-between rounded-xl border px-4 py-2 text-sm font-medium transition ${
+                  frequency === option.value
+                    ? 'border-[#224621] bg-[#224621] text-white shadow-lg'
+                    : 'border-gray-200 bg-white text-gray-900 hover:border-[#224621]'
+                }`}
+              >
+                <span>{option.label}</span>
+                <input
+                  type="radio"
+                  name="frequency"
+                  value={option.value}
+                  checked={frequency === option.value}
+                  onChange={(e) => setFrequency(e.target.value)}
+                  className="sr-only"
+                />
+              </label>
+            ))}
           </div>
         </div>
       </div>
