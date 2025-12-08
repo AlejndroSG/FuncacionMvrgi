@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Header from "@/components/Header";
 import ScrollReveal from "@/components/ScrollReveal";
 import ImpressiveBackground from "@/components/ImpressiveBackground";
+import ProjectsShowcase from "@/components/ProjectsShowcase";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -240,114 +241,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Impacto */}
-      <section id="impacto" className="relative scroll-mt-32 px-6 py-24">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-16">
-            <h2 className="mb-3 text-3xl font-bold text-gray-900 sm:text-4xl">
-              Dónde va tu dinero
-            </h2>
-            <p className="text-lg text-gray-600">Tres áreas. Impacto directo. Resultados medibles.</p>
-          </div>
-
-          <div className="space-y-24">
-            <ScrollReveal>
-              <div className="grid items-center gap-12 lg:grid-cols-2">
-                <div>
-                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-[#224621]">
-                    <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
-                  </div>
-                  <h3 className="mb-2 text-2xl font-bold text-gray-900">Educación</h3>
-                  <p className="mb-4 text-sm font-semibold text-[#224621]">482 niños ayudados en 2024</p>
-                  <p className="mb-6 text-gray-600">
-                    Libros, material, matrículas. Lo que haga falta para que puedan estudiar sin preocupaciones.
-                  </p>
-                  <Link href="#" className="inline-flex items-center gap-1 font-semibold text-[#224621] hover:gap-2 transition-all">
-                    Ver casos reales
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </Link>
-                </div>
-                <div className="relative aspect-4/3 overflow-hidden rounded-3xl shadow-xl shadow-[#224621]/10">
-                  <img 
-                    src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80" 
-                    alt="Niños estudiando en clase" 
-                    className="h-full w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent" />
-                </div>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal>
-              <div className="grid items-center gap-12 lg:grid-cols-2">
-                <div className="order-2 lg:order-1">
-                  <div className="relative aspect-4/3 overflow-hidden rounded-3xl shadow-xl shadow-[#215597]/10">
-                    <img 
-                      src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" 
-                      alt="Familia feliz en su hogar" 
-                      className="h-full w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent" />
-                  </div>
-                </div>
-                <div className="order-1 lg:order-2">
-                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-[#215597]">
-                    <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                  </div>
-                  <h3 className="mb-2 text-2xl font-bold text-gray-900">Vivienda</h3>
-                  <p className="mb-4 text-sm font-semibold text-[#215597]">127 familias con techo en 2024</p>
-                  <p className="mb-6 text-gray-600">
-                    Ayudas al alquiler, arreglos urgentes, depósitos. Porque nadie debería dormir en la calle.
-                  </p>
-                  <Link href="#" className="inline-flex items-center gap-1 font-semibold text-[#215597] hover:gap-2 transition-all">
-                    Ver casos reales
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </Link>
-                </div>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal>
-              <div className="grid items-center gap-12 lg:grid-cols-2">
-                <div>
-                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-[#224621]">
-                    <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                  </div>
-                  <h3 className="mb-2 text-2xl font-bold text-gray-900">Salud</h3>
-                  <p className="mb-4 text-sm font-semibold text-[#224621]">638 tratamientos pagados en 2024</p>
-                  <p className="mb-6 text-gray-600">
-                    Medicinas, terapias, dentista. La salud no es un lujo. Nadie tiene que elegir entre comer o curarse.
-                  </p>
-                  <Link href="#" className="inline-flex items-center gap-1 font-semibold text-[#224621] hover:gap-2 transition-all">
-                    Ver casos reales
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                  </Link>
-                </div>
-                <div className="relative aspect-4/3 overflow-hidden rounded-3xl shadow-xl shadow-[#224621]/10">
-                  <img 
-                    src="https://images.unsplash.com/photo-1584515933487-779824d29309?w=800&q=80" 
-                    alt="Médico atendiendo paciente" 
-                    className="h-full w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent" />
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
+      {/* Projects Showcase - Dónde va tu dinero */}
+      <ProjectsShowcase />
 
       <section id="partners" className="relative scroll-mt-32 overflow-hidden bg-transparent px-6 py-24">
         <div className="relative z-10 mx-auto max-w-6xl">
