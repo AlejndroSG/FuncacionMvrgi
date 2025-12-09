@@ -1,12 +1,29 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import { useUser } from '@/context/UserContext';
 
 export default function SuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center text-gray-900">
+          <div className="text-center">
+            <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-[#224621]" />
+            <p className="mt-4 text-sm text-gray-600">Cargando información de tu donación...</p>
+          </div>
+        </div>
+      }
+    >
+      <SuccessContent />
+    </Suspense>
+  );
+}
+
+function SuccessContent() {
   const searchParams = useSearchParams();
   const { addPoints, calculatePointsFromDonation, calculatePointsFromPurchase } = useUser();
   const [sessionData, setSessionData] = useState(null);
