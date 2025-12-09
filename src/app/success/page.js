@@ -18,6 +18,14 @@ export default function SuccessPage() {
   const transactionType = searchParams?.get('type'); // 'donation', 'title', 'order'
 
   useEffect(() => {
+    const safeAddPoints = async (points, type, description) => {
+      try {
+        await addPoints(points, type, description);
+      } catch (error) {
+        console.error('Error guardando puntos:', error);
+      }
+    };
+
     if (isDemo) {
       const amount = parseFloat(demoAmount) || 0;
       setSessionData({ amount: amount * 100, currency: 'eur', demo: true });
@@ -29,15 +37,15 @@ export default function SuccessPage() {
       if (transactionType === 'title') {
         points = calculatePointsFromPurchase(amount, true);
         description = `Compra de título honorífico - ${amount}€`;
-        addPoints(points, 'title', description);
+        safeAddPoints(points, 'title', description);
       } else if (transactionType === 'order') {
         points = calculatePointsFromPurchase(amount, false);
         description = `Compra en tienda - ${amount}€`;
-        addPoints(points, 'purchase', description);
+        safeAddPoints(points, 'purchase', description);
       } else {
         points = calculatePointsFromDonation(amount);
         description = `Donación - ${amount}€`;
-        addPoints(points, 'donation', description);
+        safeAddPoints(points, 'donation', description);
       }
       
       setPointsEarned(points);
@@ -53,7 +61,7 @@ export default function SuccessPage() {
     // Fetch session details from Stripe
     fetch(`/api/checkout-session?session_id=${sessionId}`)
       .then(res => res.json())
-      .then(data => {
+      .then(async data => {
         setSessionData(data);
         
         // Asignar puntos automáticamente
@@ -65,15 +73,15 @@ export default function SuccessPage() {
           if (transactionType === 'title') {
             points = calculatePointsFromPurchase(amount, true);
             description = `Compra de título honorífico - ${amount}€`;
-            addPoints(points, 'title', description);
+            await safeAddPoints(points, 'title', description);
           } else if (transactionType === 'order') {
             points = calculatePointsFromPurchase(amount, false);
             description = `Compra en tienda - ${amount}€`;
-            addPoints(points, 'purchase', description);
+            await safeAddPoints(points, 'purchase', description);
           } else {
             points = calculatePointsFromDonation(amount);
             description = `Donación - ${amount}€`;
-            addPoints(points, 'donation', description);
+            await safeAddPoints(points, 'donation', description);
           }
           
           setPointsEarned(points);
@@ -85,7 +93,7 @@ export default function SuccessPage() {
         console.error('Error fetching session:', err);
         setLoading(false);
       });
-  }, [sessionId, isDemo, demoAmount, transactionType]);
+  }, [sessionId, isDemo, demoAmount, transactionType, addPoints, calculatePointsFromDonation, calculatePointsFromPurchase]);
 
   return (
     <div className="relative min-h-screen text-gray-900">

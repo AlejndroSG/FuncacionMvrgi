@@ -1,73 +1,51 @@
-# 🔐 Instalación de NextAuth
+# Instalación de Supabase Auth
 
-## Paso 1: Instalar NextAuth
+Este documento sustituye a la guía antigua de NextAuth. Aquí tienes los pasos mínimos para usar Supabase como backend de autenticación.
 
-Abre PowerShell como **Administrador** y ejecuta:
-
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
-
-Luego, en la terminal normal del proyecto:
+## 1. Preparar el entorno
 
 ```bash
-npm install next-auth
+cp .env.example .env.local
 ```
 
-## Paso 2: Configurar Variables de Entorno
-
-Añade estas líneas a tu `.env.local`:
+Rellena estas variables:
 
 ```env
-# NextAuth
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=genera-un-secret-aleatorio-muy-largo-aqui
-
-# Google OAuth (obtener de Google Cloud Console)
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
+NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-anon-key
+SUPABASE_URL=https://tu-proyecto.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=tu-service-role-key
 ```
 
-### Generar NEXTAUTH_SECRET:
+Guarda el archivo y reinicia `npm run dev` para que Next.js cargue las variables nuevas.
 
-En PowerShell:
-```powershell
--join ((48..57) + (65..90) + (97..122) | Get-Random -Count 32 | % {[char]$_})
-```
+## 2. Activar proveedores
 
-Copia el resultado y pégalo en `NEXTAUTH_SECRET`.
+En el panel de Supabase:
 
-## Paso 3: Configurar Google OAuth
+1. **Authentication → Providers**:
+   - Activa **Email** y permite login por contraseña.
+   - Activa **Google** e introduce tu Client ID/secret.
+2. **Authentication → URL configuration**:
+   - `Site URL`: `http://localhost:3000`
+   - `Redirect URLs`: añade `http://localhost:3000/perfil`
 
-Sigue las instrucciones detalladas en `CONFIGURACION_AUTH.md`.
+## 3. Tablas necesarias
 
-## Paso 4: Reiniciar el Servidor
+Supabase ya gestiona `auth.users`. Solo necesitas las tablas para el sistema de puntos (`user_points` y `user_points_history`). Ejecuta el script descrito en `SUPABASE_SETUP.md`.
 
-```bash
-npm run dev
-```
+## 4. Prueba rápida
 
-## ✅ Verificación
+1. Ejecuta `npm run dev`.
+2. Visita `/login`:
+   - Haz click en **Continuar con Google** para probar OAuth.
+   - Cambia a "Crear cuenta" e introduce email/contraseña para validar el registro tradicional.
+3. Tras iniciar sesión, visita `/perfil` y comprueba que aparece la información del usuario junto a los puntos acumulados.
 
-1. Ve a: http://localhost:3000/login
-2. Deberías ver el botón "Continuar con Google"
-3. Al hacer click, te redirige a Google para autenticarte
-4. Después de autenticarte, vuelves a tu perfil
+## 5. Producción
 
-## 🎯 Funcionalidades Implementadas
+1. En Supabase, añade tu dominio en `Site URL` y `Redirect URLs`.
+2. Guarda las variables reales (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`) en el proveedor donde despliegues (Vercel, etc.).
+3. Repite las pruebas de login y verifica que los puntos se siguen sincronizando.
 
-- ✅ Login con Google OAuth
-- ✅ Sesiones persistentes
-- ✅ Perfil de usuario con foto de Google
-- ✅ Puntos asociados a cada cuenta
-- ✅ Carrito asociado a cada usuario
-- ✅ Menú dropdown en Header
-- ✅ Protección de rutas (perfil requiere login)
-- ✅ Logout funcional
-
-## 📝 Notas
-
-- Los puntos se guardan por usuario (email)
-- Modo invitado disponible (sin login)
-- El carrito persiste en localStorage
-- Al hacer login, se mantienen los puntos del usuario
+Con estos pasos tu proyecto queda listo para trabajar 100% con Supabase Auth.

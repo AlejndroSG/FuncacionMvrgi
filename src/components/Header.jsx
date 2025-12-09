@@ -3,12 +3,10 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
-import { useSession, signOut } from "next-auth/react";
 import { useUser } from "@/context/UserContext";
 
 export default function Header() {
-  const { data: session } = useSession();
-  const { points } = useUser();
+  const { user, points, logout } = useUser();
   const [scrolled, setScrolled] = useState(false);
   const [logoExpanded, setLogoExpanded] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -111,15 +109,15 @@ export default function Header() {
             </Link>
 
             {/* User Menu */}
-            {session ? (
+            {user ? (
               <div className="relative">
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
                   className="flex items-center gap-2 rounded-full bg-white/50 px-4 py-2 backdrop-blur-sm transition-all hover:bg-white/80"
                 >
                   <img
-                    src={session.user?.image || '/default-avatar.png'}
-                    alt={session.user?.name || 'Usuario'}
+                    src={user?.image || '/default-avatar.png'}
+                    alt={user?.name || 'Usuario'}
                     className="h-8 w-8 rounded-full"
                   />
                   <span className="hidden sm:block text-sm font-semibold text-gray-900">
@@ -150,9 +148,9 @@ export default function Header() {
                         Tienda
                       </Link>
                       <button
-                        onClick={() => {
+                        onClick={async () => {
                           setUserMenuOpen(false);
-                          signOut({ callbackUrl: '/' });
+                          await logout();
                         }}
                         className="w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-red-600 transition-colors hover:bg-red-50"
                       >

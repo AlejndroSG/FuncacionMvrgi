@@ -2,7 +2,20 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+1. Copia el archivo de ejemplo y completa tus variables:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. En `.env.local` debes definir:
+   - `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` (p?blicos, para el cliente).
+   - `SUPABASE_URL` y `SUPABASE_SERVICE_ROLE_KEY` (solo servidor, usados en `/api/points`).
+   - Tus llaves de Stripe/PayPal si vas a probar pagos.
+
+3. En el panel de Supabase activa los proveedores **Google** y **Email** dentro de `Authentication -> Providers`. En `Authentication -> URL configuration` establece `Site URL` como `http://localhost:3000` (o tu dominio en producci?n).
+
+Tras configurar todo, levanta el servidor:
 
 ```bash
 npm run dev
@@ -16,7 +29,18 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file. Whenever you change `.env.local`, stop the dev server with `Ctrl+C` and start it again so that Next.js reloads the updated environment variables.
+
+
+## Backend Supabase (sesiones y puntos)
+
+Toda la autenticaci?n ocurre en Supabase Auth (Google OAuth y email/contrase?a) y el saldo de puntos tambi?n se guarda all?:
+
+1. Sigue `SUPABASE_SETUP.md` para crear las tablas `user_points` y `user_points_history` referenciando `auth.users`.
+2. Activa los proveedores Google + Email en `Authentication -> Providers` y a?ade URLs de redirecci?n (por ejemplo `http://localhost:3000/perfil`).
+3. Rellena las variables de Supabase en `.env.local` y reinicia `npm run dev`.
+4. Haz login desde `/login` y completa una compra/donaci?n para validar que `/api/points` sincroniza el historial.
+5. Las secciones de tienda (`/tienda`, `/checkout` y el carrito) requieren sesi?n activa; al cerrar sesi?n el carrito se limpia autom?ticamente para el usuario actual.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

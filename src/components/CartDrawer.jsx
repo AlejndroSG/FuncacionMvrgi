@@ -1,11 +1,17 @@
 "use client";
 
 import { useCart } from '@/context/CartContext';
+import { useUser } from '@/context/UserContext';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function CartDrawer() {
+  const { session } = useUser();
   const { cart, isOpen, setIsOpen, removeFromCart, updateQuantity, getTotal, getItemCount } = useCart();
+
+  if (!session) {
+    return null;
+  }
 
   return (
     <>

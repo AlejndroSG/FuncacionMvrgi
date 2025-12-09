@@ -1,16 +1,26 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import Header from "@/components/Header";
 import ImpressiveBackground from "@/components/ImpressiveBackground";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useCart } from "@/context/CartContext";
+import { useUser } from "@/context/UserContext";
 import { motion } from "motion/react";
 
 export default function TiendaPage() {
+  const router = useRouter();
+  const { session, authLoading } = useUser();
   const { addToCart } = useCart();
   const [filter, setFilter] = useState('all');
+
+  useEffect(() => {
+    if (!authLoading && !session) {
+      router.replace('/login');
+    }
+  }, [authLoading, session, router]);
 
   const products = [
     {
@@ -82,6 +92,14 @@ export default function TiendaPage() {
   const filteredProducts = filter === 'all' 
     ? products 
     : products.filter(p => p.category === filter);
+
+  if (authLoading || !session) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 text-gray-900">
+        <p className="text-sm text-gray-600">Redirigiendo al inicio de sesión...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="relative text-gray-900">

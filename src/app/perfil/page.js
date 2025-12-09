@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 import Link from "next/link";
 import Header from "@/components/Header";
 import { useUser } from "@/context/UserContext";
@@ -10,16 +9,15 @@ import { motion } from "motion/react";
 
 export default function PerfilPage() {
   const router = useRouter();
-  const { data: session, status } = useSession();
-  const { user, points, pointsHistory, POINTS_CONFIG, getDiscountFromPoints } = useUser();
+  const { session, authLoading, user, points, pointsHistory, POINTS_CONFIG, getDiscountFromPoints } = useUser();
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
+    if (!authLoading && !session) {
       router.push('/login');
     }
-  }, [status, router]);
+  }, [authLoading, session, router]);
 
-  if (status === 'loading') {
+  if (authLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-[#224621]"></div>

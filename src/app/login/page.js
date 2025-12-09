@@ -1,21 +1,72 @@
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import Header from "@/components/Header";
+import { useUser } from "@/context/UserContext";
+
+const initialFormState = {
+  name: "",
+  email: "",
+  password: "",
+};
 
 export default function LoginPage() {
-  const { data: session, status } = useSession();
   const router = useRouter();
+  const {
+    session,
+    authLoading,
+    loginWithGoogle,
+    loginWithEmail,
+    registerWithEmail,
+  } = useUser();
+  const [mode, setMode] = useState("login");
+  const [form, setForm] = useState(initialFormState);
+  const [pending, setPending] = useState(false);
+  const [feedback, setFeedback] = useState("");
 
   useEffect(() => {
-    if (session) {
-      router.push('/perfil');
+    if (!authLoading && session) {
+      router.push("/perfil");
     }
-  }, [session, router]);
+  }, [session, authLoading, router]);
 
-  if (status === 'loading') {
+  const handleGoogleSignIn = async () => {
+    setFeedback("");
+    setPending(true);
+
+    try {
+      await loginWithGoogle();
+    } catch (error) {
+      setPending(false);
+      setFeedback(error.message || "No se pudo iniciar sesión con Google.");
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setPending(true);
+    setFeedback("");
+
+    try {
+      if (mode === "login") {
+        await loginWithEmail(form.email, form.password);
+        router.push("/perfil");
+      } else {
+        await registerWithEmail(form.email, form.password, form.name);
+        setFeedback(
+          "Registro completado. Revisa tu correo si Supabase requiere confirmación."
+        );
+        router.push("/perfil");
+      }
+    } catch (error) {
+      setFeedback(error.message || "Ocurrió un error.");
+    } finally {
+      setPending(false);
+    }
+  };
+
+  if (authLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-[#224621]"></div>
@@ -26,7 +77,7 @@ export default function LoginPage() {
   return (
     <div className="relative min-h-screen text-gray-900">
       <Header />
-      
+
       <div className="flex min-h-screen items-center justify-center px-6 py-32">
         <div className="w-full max-w-md">
           <div className="rounded-3xl bg-white p-8 shadow-xl ring-1 ring-gray-100 md:p-12">
@@ -35,43 +86,51 @@ export default function LoginPage() {
               <div className="mb-4 inline-flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#224621] to-[#1b3819] text-3xl font-bold text-white">
                 M
               </div>
-              <h1 className="mb-2 text-3xl font-bold text-gray-900">Bienvenido</h1>
-              <p className="text-gray-600">Inicia sesión para acceder a tu cuenta</p>
+              <h1 className="mb-2 text-3xl font-bold text-gray-900">
+                {mode === "login" ? "Bienvenido" : "Crea tu cuenta"}
+              </h1>
+              <p className="text-gray-600">
+                {mode === "login"
+                  ? "Inicia sesión para acceder a tu cuenta"
+                  : "Regístrate para empezar a acumular puntos"}
+              </p>
             </div>
 
             {/* Benefits */}
             <div className="mb-8 space-y-3 rounded-2xl bg-gray-50 p-6">
-              <p className="mb-3 text-sm font-semibold text-gray-900">Con tu cuenta podrás:</p>
-              <div className="flex items-center gap-3">
-                <svg className="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-sm text-gray-700">Acumular y canjear puntos</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <svg className="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-sm text-gray-700">Guardar tu carrito de compras</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <svg className="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-sm text-gray-700">Ver historial de donaciones</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <svg className="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-sm text-gray-700">Acceso rápido a tus títulos</span>
-              </div>
+              <p className="mb-3 text-sm font-semibold text-gray-900">
+                Con tu cuenta podrás:
+              </p>
+              {[
+                "Acumular y canjear puntos",
+                "Guardar tu carrito de compras",
+                "Ver historial de donaciones",
+                "Acceso rápido a tus títulos",
+              ].map((benefit) => (
+                <div key={benefit} className="flex items-center gap-3">
+                  <svg
+                    className="h-5 w-5 text-green-600"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span className="text-sm text-gray-700">{benefit}</span>
+                </div>
+              ))}
             </div>
 
             {/* Google Sign In Button */}
             <button
-              onClick={() => signIn('google', { callbackUrl: '/perfil' })}
-              className="flex w-full items-center justify-center gap-3 rounded-full border-2 border-gray-300 bg-white px-6 py-4 font-bold text-gray-900 shadow-sm transition-all hover:border-gray-400 hover:shadow-md"
+              onClick={handleGoogleSignIn}
+              disabled={pending}
+              className="mb-6 flex w-full items-center justify-center gap-3 rounded-full border-2 border-gray-300 bg-white px-6 py-4 font-bold text-gray-900 shadow-sm transition-all hover:border-gray-400 hover:shadow-md disabled:opacity-60"
             >
               <svg className="h-6 w-6" viewBox="0 0 24 24">
                 <path
@@ -94,8 +153,101 @@ export default function LoginPage() {
               Continuar con Google
             </button>
 
+            {/* Email/Password Form */}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {mode === "register" && (
+                <div>
+                  <label className="mb-1 block text-sm font-semibold text-gray-700">
+                    Nombre completo
+                  </label>
+                  <input
+                    type="text"
+                    value={form.name}
+                    onChange={(event) =>
+                      setForm((previous) => ({
+                        ...previous,
+                        name: event.target.value,
+                      }))
+                    }
+                    required
+                    placeholder="Tu nombre"
+                    className="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm shadow-sm focus:border-[#224621] focus:outline-none focus:ring-2 focus:ring-[#224621]/20"
+                  />
+                </div>
+              )}
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-gray-700">
+                  Correo electrónico
+                </label>
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(event) =>
+                    setForm((previous) => ({
+                      ...previous,
+                      email: event.target.value,
+                    }))
+                  }
+                  required
+                  placeholder="correo@ejemplo.com"
+                  className="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm shadow-sm focus:border-[#224621] focus:outline-none focus:ring-2 focus:ring-[#224621]/20"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-gray-700">
+                  Contraseña
+                </label>
+                <input
+                  type="password"
+                  value={form.password}
+                  onChange={(event) =>
+                    setForm((previous) => ({
+                      ...previous,
+                      password: event.target.value,
+                    }))
+                  }
+                  required
+                  placeholder="••••••••"
+                  className="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm shadow-sm focus:border-[#224621] focus:outline-none focus:ring-2 focus:ring-[#224621]/20"
+                />
+              </div>
+
+              {feedback && (
+                <p className="text-sm text-red-600">{feedback}</p>
+              )}
+
+              <button
+                type="submit"
+                disabled={pending}
+                className="w-full rounded-full bg-[#224621] px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:bg-[#1b3819] disabled:opacity-70"
+              >
+                {pending
+                  ? "Procesando..."
+                  : mode === "login"
+                  ? "Iniciar sesión"
+                  : "Crear cuenta"}
+              </button>
+            </form>
+
+            <p className="mt-4 text-center text-sm text-gray-600">
+              {mode === "login" ? "¿No tienes cuenta?" : "¿Ya tienes cuenta?"}{" "}
+              <button
+                onClick={() => {
+                  setFeedback("");
+                  setForm(initialFormState);
+                  setMode((current) =>
+                    current === "login" ? "register" : "login"
+                  );
+                }}
+                className="font-semibold text-[#224621] hover:underline"
+              >
+                {mode === "login" ? "Regístrate aquí" : "Inicia sesión"}
+              </button>
+            </p>
+
             <p className="mt-6 text-center text-xs text-gray-500">
-              Al continuar, aceptas nuestros Términos de Servicio y Política de Privacidad
+              Al continuar, aceptas nuestros Términos de Servicio y Política de
+              Privacidad
             </p>
           </div>
         </div>

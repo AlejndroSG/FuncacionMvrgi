@@ -1,33 +1,49 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from 'react';
+import { useUser } from './UserContext';
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
+  const { session } = useUser();
   const [cart, setCart] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Cargar carrito del localStorage al iniciar
+  const storageKey = session?.user?.id ? `mvrgi_cart_${session.user.id}` : null;
+
+  // Cargar carrito cuando cambie el usuario autenticado
   useEffect(() => {
-    const savedCart = localStorage.getItem('mvrgi_cart');
+    if (typeof window === 'undefined') return;
+
+    if (!storageKey) {
+      setCart([]);
+      return;
+    }
+
+    const savedCart = localStorage.getItem(storageKey);
     if (savedCart) {
       try {
         setCart(JSON.parse(savedCart));
       } catch (e) {
         console.error('Error loading cart:', e);
+        setCart([]);
       }
+    } else {
+      setCart([]);
     }
-  }, []);
+  }, [storageKey]);
 
   // Guardar carrito en localStorage cuando cambie
   useEffect(() => {
+    if (typeof window === 'undefined' || !storageKey) return;
+
     if (cart.length > 0) {
-      localStorage.setItem('mvrgi_cart', JSON.stringify(cart));
+      localStorage.setItem(storageKey, JSON.stringify(cart));
     } else {
-      localStorage.removeItem('mvrgi_cart');
+      localStorage.removeItem(storageKey);
     }
-  }, [cart]);
+  }, [cart, storageKey]);
 
   const addToCart = (product, quantity = 1) => {
     setCart(currentCart => {
@@ -67,7 +83,9 @@ export function CartProvider({ children }) {
 
   const clearCart = () => {
     setCart([]);
-    localStorage.removeItem('mvrgi_cart');
+    if (typeof window !== 'undefined' && storageKey) {
+      localStorage.removeItem(storageKey);
+    }
   };
 
   const getTotal = () => {

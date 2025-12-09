@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import Header from "@/components/Header";
 import { useCart } from "@/context/CartContext";
+import { useUser } from "@/context/UserContext";
 
 export default function CheckoutPage() {
   const router = useRouter();
+  const { session, authLoading } = useUser();
   const { cart, getTotal, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
   const [shippingData, setShippingData] = useState({
@@ -31,6 +33,12 @@ export default function CheckoutPage() {
       [e.target.name]: e.target.value
     });
   };
+
+  useEffect(() => {
+    if (!authLoading && !session) {
+      router.replace('/login');
+    }
+  }, [authLoading, session, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,6 +69,14 @@ export default function CheckoutPage() {
       setLoading(false);
     }
   };
+
+  if (authLoading || !session) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 text-gray-900">
+        <p className="text-sm text-gray-600">Redirigiendo al inicio de sesión...</p>
+      </div>
+    );
+  }
 
   if (cart.length === 0) {
     return (
