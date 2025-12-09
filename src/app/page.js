@@ -8,6 +8,7 @@ import Header from "@/components/Header";
 import ScrollReveal from "@/components/ScrollReveal";
 import ImpressiveBackground from "@/components/ImpressiveBackground";
 import ProjectsShowcase from "@/components/ProjectsShowcase";
+import Footer from "@/components/Footer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -422,34 +423,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative border-t border-gray-100 px-6 py-16">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid gap-10 sm:grid-cols-3">
-            <div>
-              <div className="mb-2 text-lg font-semibold">Mvrgi</div>
-              <p className="text-sm text-gray-500">Gente normal haciendo cosas normales.</p>
-            </div>
-            <div>
-              <div className="mb-2 text-sm font-semibold text-gray-900">Enlaces</div>
-              <div className="flex flex-col gap-2 text-sm text-gray-500">
-                <Link href="#como-funciona" className="hover:text-gray-900">Cómo funciona</Link>
-                <Link href="#impacto" className="hover:text-gray-900">Impacto</Link>
-                <Link href="#transparencia" className="hover:text-gray-900">Transparencia</Link>
-              </div>
-            </div>
-            <div>
-              <div className="mb-2 text-sm font-semibold text-gray-900">Legal</div>
-              <div className="flex flex-col gap-2 text-sm text-gray-500">
-                <Link href="#" className="hover:text-gray-900">Privacidad</Link>
-                <Link href="#" className="hover:text-gray-900">Términos</Link>
-                <Link href="#" className="hover:text-gray-900">Contacto</Link>
-              </div>
-            </div>
-          </div>
-          <div className="mt-10 border-t border-gray-100 pt-6 text-xs text-gray-500">© {new Date().getFullYear()} Fundación Mvrgi</div>
-        </div>
-      </footer>
+            <Footer />
     </div>
   );
 }
