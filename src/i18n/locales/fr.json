@@ -1,0 +1,366 @@
+{
+  "nav": {
+    "projects": "Projets",
+    "languageLabel": "Langue",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "donate": "Faire un don",
+    "links": [
+      { "href": "/#impacto", "label": "Impact" },
+      { "href": "/#como-funciona", "label": "Méthodologie" },
+      { "href": "/#donar-rapido", "label": "Donner" },
+      { "href": "/#testimonios", "label": "Histoires" },
+      { "href": "/#faq", "label": "FAQ" },
+      { "href": "/#nosotros", "label": "Nous" }
+    ]
+  },
+  "mobileMenu": {
+    "title": "Menu",
+    "subtitle": "Navigation rapide",
+    "projectsHeading": "Projets",
+    "languageLabel": "Langue",
+    "donate": "Donner maintenant",
+    "login": "Se connecter",
+    "logout": "Se déconnecter"
+  },
+  "userMenu": {
+    "profile": "Mon profil",
+    "store": "Boutique",
+    "logout": "Se déconnecter",
+    "login": "Se connecter"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Fondation Mvrgi",
+      "badge": "1 247 personnes aidées cette année",
+      "title": {
+        "line1": "Philanthropie avec",
+        "highlight": "esthétique tech",
+        "line2": "et rigueur financière"
+      },
+      "description": "Nous combinons la rigueur du capital-risque avec la sensibilité sociale. Vos dons deviennent des projets avec reporting, indicateurs et visages réels.",
+      "bullets": [
+        "94 % arrivent directement",
+        "Reçu fiscal instantané",
+        "Annulation possible à tout moment"
+      ],
+      "card": {
+        "value": "38",
+        "label": "Projets actifs",
+        "detail": "dans toute l'Espagne"
+      },
+      "primaryCta": "Donner maintenant",
+      "secondaryCta": "Voir les projets"
+    },
+    "metrics": {
+      "title": "Impact à ce jour",
+      "subtitle": "Données réelles mises à jour chaque mois",
+      "items": [
+        { "value": "1247", "suffix": "+", "label": "Personnes aidées", "detail": "Rien qu'en 2024" },
+        { "value": "38", "suffix": "", "label": "Projets actifs", "detail": "Madrid · BCN · Valence" },
+        { "value": "94", "suffix": "%", "label": "% dédié à l'impact", "detail": "Sans intermédiaires" }
+      ]
+    },
+    "steps": {
+      "title": "Trois étapes limpides",
+      "subtitle": "Playbook opérationnel",
+      "items": [
+        { "title": "Définissez votre intention", "detail": "Choisissez un projet ou laissez-nous répartir selon l'urgence." },
+        { "title": "Paiement via Stripe", "detail": "Apple Pay, Google Pay ou carte. Sans friction." },
+        { "title": "Recevez du reporting", "detail": "Tableaux de bord, photos et métriques en temps réel." }
+      ]
+    },
+    "quickDonate": {
+      "title": "Donnez en 30 secondes",
+      "description": "Vous pourrez modifier plus tard depuis votre espace. Reçu fiscal instantané.",
+      "secondary": "Stripe · Apple Pay · Google Pay",
+      "button": "Donner"
+    },
+    "visuals": [
+      {
+        "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80",
+        "caption": "Chaque don change une vie"
+      },
+      {
+        "image": "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&q=80",
+        "caption": "Ensemble nous créons un impact réel"
+      }
+    ],
+    "partners": {
+      "title": "Des équipes convaincues par la transparence nous soutiennent"
+    },
+    "transparency": {
+      "title": "Nous publions l'utilisation de chaque euro",
+      "cta": "Voir la politique",
+      "items": [
+        { "label": "Programmes", "value": 86 },
+        { "label": "Opérations", "value": 8 },
+        { "label": "Réserve", "value": 6 }
+      ],
+      "note": "Un cabinet externe audite nos comptes et vous pouvez assister aux livraisons sur demande."
+    },
+    "testimonials": {
+      "title": "Histoires vraies",
+      "subtitle": "Des donateurs et des personnes aidées.",
+      "items": [
+        {
+          "quote": "Ma mère ne pouvait pas payer ses médicaments. Grâce à vous elle va bien et je peux continuer mes études. Je n'oublierai jamais votre aide.",
+          "name": "Sofía L.",
+          "role": "Bénéficiaire directe",
+          "avatar": "https://i.pravatar.cc/150?img=47"
+        },
+        {
+          "quote": "Nous avons donné à d'autres ONG pendant des années mais celle-ci est différente. On sait qui reçoit notre aide, ils envoient des photos et des nouvelles. C'est incroyable.",
+          "name": "Miguel G.",
+          "role": "Donateur mensuel",
+          "avatar": "https://i.pravatar.cc/150?img=12"
+        },
+        {
+          "quote": "Mon fils est dyslexique et nous ne pouvions pas acheter le matériel adapté. La fondation nous a aidés en 48 heures. Il va à l'école heureux.",
+          "name": "Carmen R.",
+          "role": "Parent bénéficiaire",
+          "avatar": "https://i.pravatar.cc/150?img=32"
+        }
+      ]
+    },
+    "about": {
+      "heading": "Sans blabla",
+      "title": "Nous sommes des gens ordinaires avec une mission claire.",
+      "subtitle": "Nous ne sommes pas une énorme ONG. Nous sommes un commando.",
+      "body": "Nous travaillons à distance avec des spécialistes et des partenaires locaux. Chaque euro est examiné comme dans un fonds à impact : pas de bureaux immenses ni de salaires extravagants."
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "items": [
+        { "question": "Comment est réparti mon don ?", "answer": "Nous publions un détail mensuel et vous pouvez choisir un projet ou le fonds commun." },
+        { "question": "Ai-je un reçu fiscal ?", "answer": "Oui, il est envoyé automatiquement par email et conservé dans votre profil." },
+        { "question": "Puis-je mettre en pause ou annuler ?", "answer": "À tout moment. Depuis votre espace ou via le support." }
+      ]
+    },
+    "finalCta": {
+      "title": "Prêt·e à aider avec style et transparence.",
+      "description": "Nous soignons autant le design que l'impact. Rejoignez-nous aujourd'hui.",
+      "primary": "Commencer",
+      "secondary": "Voir la méthode"
+    }
+  },
+  "projects": {
+    "badge": "Projets en cours",
+    "title": "Où va chaque euro ?",
+    "description": "Chaque euro donné rapproche ces initiatives de la réalité. Choisissez celle qui vous inspire ou soutenez-les toutes.",
+    "viewProject": "Voir le projet",
+    "items": [
+      {
+        "id": "area-ecologica",
+        "title": "Zone écologique El Taray",
+        "description": "Création d'un espace d'éducation environnementale avec activités culturelles.",
+        "image": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=900&q=80",
+        "color": "from-emerald-500/70 via-emerald-400/80 to-emerald-500/70",
+        "icon": "🌱",
+        "link": "/area-ecologica",
+        "stats": { "label": "Objectif", "value": "25 000 €" },
+        "progress": 72
+      },
+      {
+        "id": "voluntariado",
+        "title": "Volontariat international",
+        "description": "Échange culturel à Quito avec l'Institut Cervantès et des universités locales.",
+        "image": "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=900&q=80",
+        "color": "from-sky-500/70 via-cyan-400/80 to-sky-500/70",
+        "icon": "🌍",
+        "link": "/voluntariado",
+        "stats": { "label": "Objectif", "value": "18 000 €" },
+        "progress": 40
+      },
+      {
+        "id": "estatua",
+        "title": "Restauration patrimoniale",
+        "description": "Restauration de la statue de l'Immaculée Conception et numérisation des archives.",
+        "image": "https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=900&q=80",
+        "color": "from-violet-500/70 via-indigo-400/80 to-violet-500/70",
+        "icon": "🏛️",
+        "link": "/estatua-inmaculada",
+        "stats": { "label": "Objectif", "value": "12 000 €" },
+        "progress": 58
+      },
+      {
+        "id": "cohousing",
+        "title": "Co-housing pour seniors",
+        "description": "Un modèle d'habitat collaboratif pour seniors actifs, durable et évolutif.",
+        "image": "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=900&q=80",
+        "color": "from-amber-500/70 via-orange-400/80 to-amber-500/70",
+        "icon": "🏡",
+        "link": "/co-housing",
+        "stats": { "label": "Objectif", "value": "45 000 €" },
+        "progress": 24
+      }
+    ],
+    "cta": {
+      "title": "Envie de concrétiser tous les projets ?",
+      "description": "Nous répartissons votre don entre les initiatives qui en ont le plus besoin.",
+      "button": "Donner maintenant"
+    }
+  },
+  "donation": {
+    "hero": {
+      "badge": "100 % sécurisé et transparent",
+      "title": "Changez une vie aujourd'hui",
+      "description": "Votre don arrive directement à des familles réelles. Pas d'intermédiaires, une transparence totale."
+    },
+    "reasons": [
+      {
+        "title": "Paiement 100 % sécurisé",
+        "description": "Traitement par Stripe, la plateforme de paiement la plus fiable."
+      },
+      {
+        "title": "Reçu fiscal instantané",
+        "description": "Envoyé immédiatement par email afin que vous puissiez déduire votre don."
+      },
+      {
+        "title": "Transparence totale",
+        "description": "Recevez des nouvelles concrètes sur l'impact de votre contribution."
+      }
+    ]
+  },
+  "donationForm": {
+    "title": "Faites un don",
+    "frequencyLabel": "Fréquence",
+    "frequency": {
+      "one_time": "Unique",
+      "monthly": "Mensuel"
+    },
+    "amountLabel": "Montant (EUR)",
+    "nameLabel": "Nom complet",
+    "namePlaceholder": "Votre nom",
+    "emailLabel": "Email",
+    "emailPlaceholder": "vous@email.com",
+    "emailHelper": "Nous y envoyons le reçu fiscal",
+    "errors": {
+      "amount": "Entrez un montant valide (minimum 1 €).",
+      "email": "Veuillez indiquer un email valide.",
+      "name": "Veuillez indiquer votre nom.",
+      "generic": "Erreur lors de la création du paiement",
+      "redirect": "Erreur de redirection vers Checkout"
+    },
+    "submit": {
+      "processing": "Traitement...",
+      "one_time": "Donner maintenant",
+      "monthly": "Donner chaque mois"
+    },
+    "notes": {
+      "live": "Paiements traités par Stripe · Reçu fiscal instantané",
+      "demo": "Mode démo : sans Stripe, redirection vers la page de succès."
+    }
+  },
+  "store": {
+    "hero": {
+      "title": "Boutique",
+      "highlight": "souvenir",
+      "description": "Chaque achat soutient nos projets. Des produits premium avec un réel impact."
+    },
+    "filters": [
+      { "id": "all", "label": "Tous" },
+      { "id": "ropa", "label": "Vêtements" },
+      { "id": "accesorios", "label": "Accessoires" },
+      { "id": "hogar", "label": "Maison" },
+      { "id": "papeleria", "label": "Papeterie" }
+    ],
+    "status": {
+      "popular": "POPULAIRE",
+      "stock": "Stock",
+      "soldOut": "Épuisé",
+      "addToCart": "Ajouter au panier",
+      "redirect": "Redirection vers la connexion..."
+    },
+    "products": [
+      {
+        "id": "camiseta-mvrgi",
+        "name": "T-shirt Fondation Mvrgi",
+        "price": 20,
+        "category": "ropa",
+        "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80",
+        "description": "T-shirt 100 % coton biologique avec logo brodé",
+        "stock": 25,
+        "popular": true
+      },
+      {
+        "id": "taza-ceramica",
+        "name": "Tasse en céramique",
+        "price": 12,
+        "category": "hogar",
+        "image": "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=400&q=80",
+        "description": "Tasse artisanale avec design exclusif",
+        "stock": 40
+      },
+      {
+        "id": "bolsa-tela",
+        "name": "Sac en toile écologique",
+        "price": 15,
+        "category": "accesorios",
+        "image": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=400&q=80",
+        "description": "Sac réutilisable en coton 100 % durable",
+        "stock": 30,
+        "popular": true
+      },
+      {
+        "id": "gorra",
+        "name": "Casquette brodée",
+        "price": 18,
+        "category": "accesorios",
+        "image": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&q=80",
+        "description": "Casquette ajustable avec logo brodé",
+        "stock": 20
+      },
+      {
+        "id": "sudadera",
+        "name": "Sweat à capuche premium",
+        "price": 35,
+        "category": "ropa",
+        "image": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&q=80",
+        "description": "Design exclusif et matière ultra douce",
+        "stock": 15
+      },
+      {
+        "id": "libreta",
+        "name": "Carnet recyclé",
+        "price": 10,
+        "category": "papeleria",
+        "image": "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=400&q=80",
+        "description": "Carnet A5 en papier recyclé",
+        "stock": 50
+      }
+    ]
+  },
+  "cart": {
+    "title": "Panier",
+    "emptyTitle": "Votre panier est vide",
+    "emptySubtitle": "Ajoutez des produits pour commencer",
+    "goToStore": "Aller à la boutique",
+    "total": "Total",
+    "checkout": "Passer au paiement",
+    "continue": "Continuer vos achats"
+  },
+  "footer": {
+    "tagline": "Fondation Mvrgi",
+    "title": "Des gens ordinaires qui font l'exceptionnel.",
+    "description": "Nous créons des projets sociaux, culturels et environnementaux qui offrent de vraies opportunités.",
+    "navTitle": "Navigation",
+    "links": [
+      { "href": "/", "label": "Accueil" },
+      { "href": "/donate", "label": "Faire un don" },
+      { "href": "/tienda", "label": "Boutique" },
+      { "href": "/area-ecologica", "label": "Zone écologique" },
+      { "href": "/co-housing", "label": "Co-housing" }
+    ],
+    "contactTitle": "Contact",
+    "contact": [
+      { "label": "Email", "value": "hola@fundacionmvrgi.org" },
+      { "label": "Téléphone", "value": "+34 600 123 456" },
+      { "label": "Adresse", "value": "Av. Mediterráneo 123, Almería" }
+    ],
+    "ctaTitle": "Devenez membre",
+    "ctaDescription": "Rejoignez la communauté qui transforme les dons en projets tangibles.",
+    "ctaButton": "Contribuer",
+    "legal": "Tous droits réservés"
+  }
+}

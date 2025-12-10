@@ -14,23 +14,24 @@ export function CartProvider({ children }) {
 
   // Cargar carrito cuando cambie el usuario autenticado
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     if (!storageKey) {
-      setCart([]);
+      setTimeout(() => setCart([]), 0);
       return;
     }
 
     const savedCart = localStorage.getItem(storageKey);
     if (savedCart) {
       try {
-        setCart(JSON.parse(savedCart));
+        const parsed = JSON.parse(savedCart);
+        setTimeout(() => setCart(parsed), 0);
       } catch (e) {
-        console.error('Error loading cart:', e);
-        setCart([]);
+        console.error("Error loading cart:", e);
+        setTimeout(() => setCart([]), 0);
       }
     } else {
-      setCart([]);
+      setTimeout(() => setCart([]), 0);
     }
   }, [storageKey]);
 

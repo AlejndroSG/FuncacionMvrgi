@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { UserProvider } from "@/context/UserContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 import CartDrawer from "@/components/CartDrawer";
 
 const geistSans = Geist({
@@ -15,8 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Fundación Mvrgi - Gente normal haciendo cosas normales",
-  description: "Fundación benéfica dedicada a proyectos sociales, culturales y medioambientales. Área Ecológica, Co-housing, Voluntariado Internacional y más.",
+  title: "Fundacion Mvrgi - Impacto directo y transparente",
+  description:
+    "Fundacion benefica enfocada en proyectos sociales, culturales y medioambientales como Area Ecologica, Co-housing y Voluntariado Internacional.",
 };
 
 export default function RootLayout({ children }) {
@@ -25,12 +27,14 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <UserProvider>
-          <CartProvider>
-            {children}
-            <CartDrawer />
-          </CartProvider>
-        </UserProvider>
+        <LanguageProvider>
+          <UserProvider>
+            <CartProvider>
+              {children}
+              <CartDrawer />
+            </CartProvider>
+          </UserProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

@@ -45,7 +45,7 @@ function SuccessContent() {
 
     if (isDemo) {
       const amount = parseFloat(demoAmount) || 0;
-      setSessionData({ amount: amount * 100, currency: 'eur', demo: true });
+      setTimeout(() => setSessionData({ amount: amount * 100, currency: 'eur', demo: true }), 0);
       
       // Asignar puntos según el tipo de transacción
       let points = 0;
@@ -65,13 +65,13 @@ function SuccessContent() {
         safeAddPoints(points, 'donation', description);
       }
       
-      setPointsEarned(points);
-      setLoading(false);
+      setTimeout(() => setPointsEarned(points), 0);
+      setTimeout(() => setLoading(false), 0);
       return;
     }
 
     if (!sessionId) {
-      setLoading(false);
+      setTimeout(() => setLoading(false), 0);
       return;
     }
 

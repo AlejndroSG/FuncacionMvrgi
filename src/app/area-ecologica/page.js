@@ -109,7 +109,7 @@ export default function AreaEcologica() {
               <div>
                 <h2 className="mb-6 text-4xl font-bold text-gray-900">El Duende de Balerma</h2>
                 <p className="mb-6 text-lg text-gray-600">
-                  Descubre la magia de Balerma a través de nuestras actividades culturales y recreativas. "El Duende" es una iniciativa para recuperar tradiciones y conectar con la historia local en un entorno natural.
+                  Descubre la magia de Balerma a través de nuestras actividades culturales y recreativas. &quot;El Duende&quot; es una iniciativa para recuperar tradiciones y conectar con la historia local en un entorno natural.
                 </p>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="rounded-xl bg-white p-6 shadow-sm">
