@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
-import { ChevronDown, Globe, X } from "lucide-react";
+import { ArrowUp, ChevronDown, Globe, X } from "lucide-react";
 import { useUser } from "@/context/UserContext";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -18,6 +18,7 @@ export default function Header() {
   const [projectsOpen, setProjectsOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [languageOpen, setLanguageOpen] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const projectsRef = useRef(null);
   const languageRef = useRef(null);
   const router = useRouter();
@@ -67,6 +68,7 @@ export default function Header() {
       setUserMenuOpen(false);
       setMobileMenuOpen(false);
       setLanguageOpen(false);
+      setShowBackToTop(window.scrollY > window.innerHeight / 2);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -98,120 +100,139 @@ export default function Header() {
   };
 
   const portal = (
-    <AnimatePresence>
-      {mobileMenuOpen && (
-        <motion.div
-          className="fixed inset-0 z-50 flex flex-col bg-[radial-gradient(circle_at_top,_rgba(12,58,31,1)),radial-gradient(circle_at_80%_20%,_rgba(13,59,102,0.12),_transparent_50%),linear-gradient(180deg,_rgba(249,252,255,1),_rgba(233,243,238,1))] text-white md:hidden"
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
-          exit={{ x: "100%" }}
-          transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          <div className="flex h-full w-full flex-col px-8 pb-8 pt-10">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs uppercase tracking-[0.5em] text-white/50">
-                  {mobileCopy.title}
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold">
-                  {mobileCopy.subtitle}
-                </h2>
+    <>
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="fixed inset-0 z-50 flex flex-col bg-[radial-gradient(circle_at_top,_rgba(12,58,31,1)),radial-gradient(circle_at_80%_20%,_rgba(13,59,102,0.12),_transparent_50%),linear-gradient(180deg,_rgba(249,252,255,1),_rgba(233,243,238,1))] text-white md:hidden"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <div className="flex h-full w-full flex-col px-8 pb-8 pt-10">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.5em] text-white/50">
+                    {mobileCopy.title}
+                  </p>
+                  <h2 className="mt-3 text-3xl font-semibold">
+                    {mobileCopy.subtitle}
+                  </h2>
+                </div>
+                <button
+                  type="button"
+                  aria-label={navCopy.closeMenu}
+                  className="rounded-full border border-white/20 p-2 text-white/80 transition hover:bg-white/10"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <X className="h-4 w-4" />
+                </button>
               </div>
-              <button
-                type="button"
-                aria-label={navCopy.closeMenu}
-                className="rounded-full border border-white/20 p-2 text-white/80 transition hover:bg-white/10"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-            <div className="flex flex-1 flex-col items-center justify-evenly">
-              <div className="w-full max-w-sm space-y-3 text-center">
-                {navLinks.map((item) => (
-                  <button
-                    key={item.href}
-                    type="button"
-                    onClick={() => handleProjectNavigation(item.href)}
-                    className="w-full rounded-3xl bg-white/10 px-5 py-4 text-lg font-semibold text-white/90 shadow-[0_20px_60px_rgba(0,0,0,0.2)] transition hover:bg-white/15"
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-              <div className="w-full max-w-sm space-y-2 text-center">
-                <p className="text-xs uppercase tracking-[0.4em] text-white/60">
-                  {mobileCopy.projectsHeading}
-                </p>
-                <div className="grid grid-cols-2 gap-3">
-                  {projectEntries.map((project) => (
+              <div className="flex flex-1 flex-col items-center justify-evenly">
+                <div className="w-full max-w-sm space-y-3 text-center">
+                  {navLinks.map((item) => (
                     <button
-                      key={project.value}
+                      key={item.href}
                       type="button"
-                      onClick={() => handleProjectNavigation(project.value)}
-                      className="rounded-3xl border border-white/20 px-4 py-3 text-sm font-semibold text-white/80 transition hover:bg-white/10"
+                      onClick={() => handleProjectNavigation(item.href)}
+                      className="w-full rounded-3xl bg-white/10 px-5 py-4 text-lg font-semibold text-white/90 shadow-[0_20px_60px_rgba(0,0,0,0.2)] transition hover:bg-white/15"
                     >
-                      {project.label}
+                      {item.label}
                     </button>
                   ))}
                 </div>
-              </div>
-            </div>
-            <div className="w-full max-w-sm space-y-3 text-center">
-              <Link
-                href="/donate"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex w-full items-center justify-center rounded-3xl bg-gradient-to-r from-[#224621] via-[#1e4e75] to-[#224621] px-5 py-4 text-sm font-semibold text-white shadow-xl"
-              >
-                {mobileCopy.donate || navCopy.donate}
-              </Link>
-              {user ? (
-                <button
-                  type="button"
-                  onClick={async () => {
-                    setMobileMenuOpen(false);
-                    await logout();
-                  }}
-                  className="w-full rounded-3xl border border-white/20 px-5 py-4 text-sm font-semibold text-white/80 transition hover:bg-white/10"
-                >
-                  {mobileCopy.logout}
-                </button>
-              ) : (
-                <Link
-                  href="/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex w-full items-center justify-center rounded-3xl border border-white/20 px-5 py-4 text-sm font-semibold text-white/80 transition hover:bg-white/10"
-                >
-                  {mobileCopy.login}
-                </Link>
-              )}
-              <div className="pt-4 text-center">
-                <p className="text-xs uppercase tracking-[0.4em] text-white/60">
-                  {mobileCopy.languageLabel}
-                </p>
-                <div className="mt-2 rounded-full border border-white/30 bg-white/10 px-4 py-2">
-                  <select
-                    value={locale}
-                    onChange={(event) => handleLocaleChange(event.target.value)}
-                    className="w-full bg-transparent text-center text-sm font-semibold text-white focus:outline-none"
-                  >
-                    {locales.map((option) => (
-                      <option
-                        key={option.value}
-                        value={option.value}
-                        className="bg-[#0b1b2a] text-white"
+                <div className="w-full max-w-sm space-y-2 text-center">
+                  <p className="text-xs uppercase tracking-[0.4em] text-white/60">
+                    {mobileCopy.projectsHeading}
+                  </p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {projectEntries.map((project) => (
+                      <button
+                        key={project.value}
+                        type="button"
+                        onClick={() => handleProjectNavigation(project.value)}
+                        className="rounded-3xl border border-white/20 px-4 py-3 text-sm font-semibold text-white/80 transition hover:bg-white/10"
                       >
-                        {option.label}
-                      </option>
+                        {project.label}
+                      </button>
                     ))}
-                  </select>
+                  </div>
+                </div>
+              </div>
+              <div className="w-full max-w-sm space-y-3 text-center">
+                <Link
+                  href="/donate"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex w-full items-center justify-center rounded-3xl bg-gradient-to-r from-[#224621] via-[#1e4e75] to-[#224621] px-5 py-4 text-sm font-semibold text-white shadow-xl"
+                >
+                  {mobileCopy.donate || navCopy.donate}
+                </Link>
+                {user ? (
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      setMobileMenuOpen(false);
+                      await logout();
+                    }}
+                    className="w-full rounded-3xl border border-white/20 px-5 py-4 text-sm font-semibold text-white/80 transition hover:bg-white/10"
+                  >
+                    {mobileCopy.logout}
+                  </button>
+                ) : (
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex w-full items-center justify-center rounded-3xl border border-white/20 px-5 py-4 text-sm font-semibold text-white/80 transition hover:bg-white/10"
+                  >
+                    {mobileCopy.login}
+                  </Link>
+                )}
+                <div className="pt-4 text-center">
+                  <p className="text-xs uppercase tracking-[0.4em] text-white/60">
+                    {mobileCopy.languageLabel}
+                  </p>
+                  <div className="mt-2 rounded-full border border-white/30 bg-white/10 px-4 py-2">
+                    <select
+                      value={locale}
+                      onChange={(event) => handleLocaleChange(event.target.value)}
+                      className="w-full bg-transparent text-center text-sm font-semibold text-white focus:outline-none"
+                    >
+                      {locales.map((option) => (
+                        <option
+                          key={option.value}
+                          value={option.value}
+                          className="bg-[#0b1b2a] text-white"
+                        >
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showBackToTop && (
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.2 }}
+            type="button"
+            className="fixed bottom-6 right-6 z-40 flex rounded-full bg-white/80 p-3 text-slate-700 shadow-xl ring-1 ring-slate-200 backdrop-blur"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            aria-label="Volver arriba"
+          >
+            <ArrowUp className="h-5 w-5" />
+          </motion.button>
+        )}
+      </AnimatePresence>
+    </>
   );
 
   return (
