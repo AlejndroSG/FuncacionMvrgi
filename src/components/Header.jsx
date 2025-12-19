@@ -32,7 +32,6 @@ export default function Header() {
     donate: "Donate",
     ...(dictionary?.nav ?? {}),
   };
-  const navLinks = navCopy.links ?? [];
   const mobileCopy = {
     title: "Menu",
     subtitle: "Navigate fast",
@@ -129,19 +128,7 @@ export default function Header() {
                   <X className="h-4 w-4" />
                 </button>
               </div>
-              <div className="flex flex-1 flex-col items-center justify-evenly">
-                <div className="w-full max-w-sm space-y-3 text-center">
-                  {navLinks.map((item) => (
-                    <button
-                      key={item.href}
-                      type="button"
-                      onClick={() => handleProjectNavigation(item.href)}
-                      className="w-full rounded-3xl bg-white/10 px-5 py-4 text-lg font-semibold text-white/90 shadow-[0_20px_60px_rgba(0,0,0,0.2)] transition hover:bg-white/15"
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
+              <div className="flex flex-1 flex-col items-center justify-center gap-10">
                 <div className="w-full max-w-sm space-y-2 text-center">
                   <p className="text-xs uppercase tracking-[0.4em] text-white/60">
                     {mobileCopy.projectsHeading}
@@ -242,7 +229,7 @@ export default function Header() {
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
         className={`fixed top-4 left-1/2 z-40 -translate-x-1/2 px-4 transition-all duration-300 ${
-          scrolled ? "w-full max-w-6xl" : "w-full max-w-7xl"
+          scrolled ? "w-full max-w-[820px]" : "w-full max-w-4xl"
         }`}
       >
         <nav
@@ -293,15 +280,6 @@ export default function Header() {
             </motion.div>
 
             <div className="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
-              {navLinks.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="transition-colors hover:text-slate-900"
-                >
-                  {item.label}
-                </Link>
-              ))}
               <motion.div
                 className="relative"
                 ref={projectsRef}
